@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "746b2774-2ec6-4e86-bc85-85c8b27d2373",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 268,
+  "height": 21,
+  "platformSettings": {},
+  "subMetas": {
+    "SHUFFLING CARDS...": {
+      "ver": "1.0.6",
+      "uuid": "479657b1-aa3a-4c57-be67-60b8b9971675",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "746b2774-2ec6-4e86-bc85-85c8b27d2373",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 268,
+      "height": 21,
+      "rawWidth": 268,
+      "rawHeight": 21,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

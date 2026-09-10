@@ -1,0 +1,55 @@
+{
+  "ver": "2.3.7",
+  "uuid": "ca771d0e-23c1-4880-8f16-efcf4558a4ba",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 294,
+  "height": 94,
+  "platformSettings": {
+    "ios": {
+      "formats": [
+        {
+          "name": "astc_5x5",
+          "quality": "medium"
+        }
+      ]
+    },
+    "android": {
+      "formats": [
+        {
+          "name": "astc_5x5",
+          "quality": "medium"
+        }
+      ]
+    }
+  },
+  "subMetas": {
+    "Live Video Poker Game": {
+      "ver": "1.0.6",
+      "uuid": "ea8b40fa-f116-4777-9b6b-83b8b8bc82ff",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "ca771d0e-23c1-4880-8f16-efcf4558a4ba",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0.5,
+      "offsetY": -0.5,
+      "trimX": 1,
+      "trimY": 1,
+      "width": 293,
+      "height": 93,
+      "rawWidth": 294,
+      "rawHeight": 94,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

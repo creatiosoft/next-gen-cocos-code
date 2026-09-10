@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "487424935012",
+    "project_id": "tx-poker-478f1",
+    "storage_bucket": "tx-poker-478f1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487424935012:android:37f9ba92a512d0f705cb71",
+        "android_client_info": {
+          "package_name": "com.game.txpoker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEC7MvWb7_lVonMFbT3wPmxh7VAGNZwbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

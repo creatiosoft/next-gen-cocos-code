@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBhRoM9KAc-wilEHWgcUGox6eG48KrHEQs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>878035535758</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.thenobocompany.battuta</string>
+	<key>PROJECT_ID</key>
+	<string>battuta-the-game-93498</string>
+	<key>STORAGE_BUCKET</key>
+	<string>battuta-the-game-93498.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:878035535758:ios:c0aadb7548d4536dfec6df</string>
+</dict>
+</plist>

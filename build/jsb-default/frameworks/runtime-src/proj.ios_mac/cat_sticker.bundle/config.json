@@ -1,0 +1,7 @@
+{
+  "type": "face_ar",
+  "target": "head_top",  // 贴纸锚点（可设为eyes/nose/mouth等）
+  "scale": 1.2,
+  "offset": {"x":0, "y":-0.1},
+  "fps": 8
+}

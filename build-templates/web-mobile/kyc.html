@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>KYC Verification</title>
+    <script src="https://static.sumsub.com/idensic/static/sns-websdk-builder.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-overflow-scrolling: touch;
+            position: fixed;
+            overscroll-behavior: contain;
+        }
+
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .refresh-button,
+        .close-button {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-button:hover,
+        .close-button:hover {
+            background: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        #sumsub-websdk-container {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            z-index: 999;
+        }
+
+        .loading {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1890ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        * {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <div class="header-left">
+            <button class="refresh-button" onclick="refreshPage()" title="Reload">↻</button>
+            <div class="header-title">TX Poker KYC</div>
+        </div>
+        <button class="close-button" onclick="closeKYC()">×</button>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div id="sumsub-websdk-container"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId') || 'default_user';
+        const accessToken = urlParams.get('token') || '';
+
+        window.updateAccessToken = function(newToken) {
+            console.log('Received new token:', newToken);
+        };
+
+        function sendToCocos(type, data) {
+            const message = JSON.stringify({
+                type: type,
+                payload: data,
+                timestamp: Date.now()
+            });
+
+            console.log('Sending to Cocos:', type, data);
+
+            try {
+                window.location = 'kyccallback://' + encodeURIComponent(message);
+            } catch (error) {
+                console.error('Failed to send message to Cocos:', error);
+            }
+        }
+
+        function closeKYC() {
+            console.log('Close button clicked');
+            sendToCocos('closeWebView', {
+                reason: 'user_cancelled',
+                userId: userId,
+                timestamp: Date.now()
+            });
+        }
+
+        function refreshPage() {
+            console.log('User clicked refresh');
+            document.getElementById('loading').classList.remove('hidden');
+            window.location.reload();
+        }
+
+        function showLoading() {
+            const loading = document.getElementById('loading');
+            if (loading) loading.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            const loading = document.getElementById('loading');
+            if (loading) loading.classList.add('hidden');
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' || event.keyCode === 27) {
+                closeKYC();
+            }
+        });
+
+        function launchKYC() {
+            console.log('Launching KYC verification for user:', userId);
+            showLoading();
+
+            if (typeof snsWebSdk === 'undefined') {
+                console.log('Sumsub SDK not loaded, retrying...');
+                setTimeout(launchKYC, 100);
+                return;
+            }
+
+            try {
+                window.snsWebSdkInstance = snsWebSdk
+                    .init(accessToken, () => {
+                        return new Promise((resolve) => {
+                            console.log('Token expired, requesting new token');
+                            sendToCocos('needNewToken', {
+                                userId: userId,
+                                currentToken: accessToken
+                            });
+                            resolve(accessToken);
+                        });
+                    })
+                    .withConf({
+                        lang: "en",
+                        theme: "light",
+                        uiConf: {
+                            labels: {
+                                'id-docs.subtitle': 'Upload Your ID Photo',
+                                'id-docs.identity.title': 'Verify Your Identity',
+                                'selfie.title': 'Face Recognition'
+                            }
+                        }
+                    })
+                    .withOptions({
+                        addViewportTag: true,
+                        adaptIframeHeight: true
+                    })
+                    .on("idCheck.onStepCompleted", (payload) => {
+                        console.log('Step completed:', payload);
+                        sendToCocos('stepCompleted', payload);
+                    })
+                    .on("idCheck.onError", (error) => {
+                        console.error('KYC Error:', error);
+                        sendToCocos('error', { code: error.code, message: error.message, details: error });
+                    })
+                    .on("idCheck.onApplicantLoaded", () => {
+                        hideLoading();
+                        sendToCocos('applicantLoaded', {});
+                    })
+                    .on("idCheck.onApplicantSubmitted", (payload) => {
+                        console.log('Applicant submitted:', payload);
+                        sendToCocos('applicantSubmitted', payload);
+                    })
+                    .on("idCheck.onDone", (payload) => {
+                        console.log('KYC completed:', payload);
+                        sendToCocos('verificationDone', payload);
+                        setTimeout(() => {
+                            sendToCocos('closeWebView', {
+                                reason: 'verification_completed',
+                                status: payload.status,
+                                userId: userId
+                            });
+                        }, 3000);
+                    })
+                    .build();
+
+                window.snsWebSdkInstance.launch("#sumsub-websdk-container");
+
+            } catch (error) {
+                console.error('Failed to initialize Sumsub SDK:', error);
+                hideLoading();
+                sendToCocos('error', {
+                    code: 'INIT_ERROR',
+                    message: 'initialize failed: ' + error.message
+                });
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', launchKYC);
+        } else {
+            setTimeout(launchKYC, 100);
+        }
+    </script>
+</body>
+</html>

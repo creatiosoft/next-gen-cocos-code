@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "d03e98c1-5237-43de-add0-0c4a8107c65e",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 24,
+  "height": 24,
+  "platformSettings": {},
+  "subMetas": {
+    "Tournament Chips": {
+      "ver": "1.0.6",
+      "uuid": "c2d036e4-675b-41ed-8892-f0ec4ddba5a9",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "d03e98c1-5237-43de-add0-0c4a8107c65e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 1,
+      "trimY": 1,
+      "width": 22,
+      "height": 22,
+      "rawWidth": 24,
+      "rawHeight": 24,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
