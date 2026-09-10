@@ -96,7 +96,7 @@ var TXSignup = cc.Class({
         },
     },
 
-    onLoad: function() {
+    onLoad: function () {
 
         if (GameManager.isZFold()) {
             var size = cc.size(cc.Canvas.instance.node.width, cc.Canvas.instance.node.height);
@@ -115,7 +115,7 @@ var TXSignup = cc.Class({
         this.playerId = "";
     },
 
-    onShow: function(data) {
+    onShow: function (data) {
         if (data) {
             this.onShowVerify(data.playerId, data.emailId, data.password, data.userName);
             return;
@@ -123,8 +123,8 @@ var TXSignup = cc.Class({
         this.txOptNumber.string = "";
         this.txOTPDebug.string = "";
         this.txUserName.string = "";
-        this.txFirstName.string = "";
-        this.txLastName.string = "";
+        this.txFirstName.string = "xx";
+        this.txLastName.string = "yy";
         this.txPassword.string = "";
         this.txConfirmPassword.string = "";
         this.txOTPLabel1.string = "";
@@ -153,7 +153,7 @@ var TXSignup = cc.Class({
         this.onCheck();
     },
 
-    formatSeconds: function(seconds) {
+    formatSeconds: function (seconds) {
         const totalSeconds = Math.floor(seconds);
         const mins = Math.floor(totalSeconds / 60);
         const secs = totalSeconds % 60;
@@ -163,13 +163,13 @@ var TXSignup = cc.Class({
         return `${formattedMins}:${formattedSecs} mins`;
     },
 
-    onShowVerify: function(playerId, txEmailId, txPassword, txUserName) {
+    onShowVerify: function (playerId, txEmailId, txPassword, txUserName) {
         this.node.active = true;
         this.txOptNumber.string = "";
         this.txOTPDebug.string = "";
         this.txUserName.string = "";
-        this.txFirstName.string = "";
-        this.txLastName.string = "";
+        this.txFirstName.string = "xx";
+        this.txLastName.string = "yy";
         this.txPassword.string = "";
         this.txConfirmPassword.string = "";
         this.txEmailId.string = "";
@@ -211,7 +211,7 @@ var TXSignup = cc.Class({
                 this.resendCooldownSeconds = data.data.resendCooldownSeconds;
                 this.otpExpiresIn = data.data.otpExpiresIn;
 
-                this.otpTimer = setInterval(function() {
+                this.otpTimer = setInterval(function () {
                     this.resendCooldownSeconds -= 1;
                     this.txOTPLabel2.string = this.resendCooldownSeconds + "s";
                     if (this.resendCooldownSeconds <= 0) {
@@ -222,7 +222,7 @@ var TXSignup = cc.Class({
                     }
                 }.bind(this), 1000);
 
-                this.otpExpTimer = setInterval(function() {
+                this.otpExpTimer = setInterval(function () {
                     this.otpExpiresIn -= 1;
                     this.txOTPLabelExp.string = "OTP expires in " + this.formatSeconds(this.otpExpiresIn);
                     this.txOTPLabelExp.node.color = cc.Color.WHITE;
@@ -237,7 +237,7 @@ var TXSignup = cc.Class({
                 this.resendCooldownSeconds = data.data.remainingCooldown;
                 this.txOTPLabelExp.string = data.message;
                 this.txOTPLabel1.string = "Didn’t get a code? Resend OTP in ";
-                this.otpTimer = setInterval(function() {
+                this.otpTimer = setInterval(function () {
                     this.resendCooldownSeconds -= 1;
                     this.txOTPLabel2.string = this.resendCooldownSeconds + "s";
                     if (this.resendCooldownSeconds <= 0) {
@@ -251,7 +251,7 @@ var TXSignup = cc.Class({
         });
     },
 
-    onClose: function() {
+    onClose: function () {
         if (this.otpTimer) {
             clearInterval(this.otpTimer);
         }
@@ -261,7 +261,7 @@ var TXSignup = cc.Class({
         GameManager.popUpManager.remove(PopUpType.TXSignup);
     },
 
-    gotoLogin: function() {
+    gotoLogin: function () {
         if (this.otpTimer) {
             clearInterval(this.otpTimer);
         }
@@ -271,7 +271,7 @@ var TXSignup = cc.Class({
         GameManager.popUpManager.remove(PopUpType.TXSignup);
     },
 
-    onCheck: function() {
+    onCheck: function () {
         this.txSignupButton.interactable = false;
         if (this.txUserName.string === "") {
             return;
@@ -298,7 +298,7 @@ var TXSignup = cc.Class({
         this.txSignupButton.interactable = true;
     },
 
-    onCheckVerify: function() {
+    onCheckVerify: function () {
         this.txVerifyOTPButton.node.active = false;
         this.txSendOTPButton.node.active = true;
 
@@ -310,7 +310,7 @@ var TXSignup = cc.Class({
         this.txSendOTPButton.node.active = false;
     },
 
-    onSignup: function() {
+    onSignup: function () {
         this.txErrorMessageStep1.string = "";
 
         this.txUserName.node.getChildByName("red").active = false;
@@ -349,7 +349,7 @@ var TXSignup = cc.Class({
             (data) => {
                 console.log("txRegister", data);
                 console.log("txRegister", JSON.stringify(data, null, 4));
-                
+
                 if (!data.success || data.status == "fail") {
                     if (data.message) {
                         self.txErrorMessageStep1.string = data.message;
@@ -379,10 +379,10 @@ var TXSignup = cc.Class({
                     else if (self.txErrorMessageStep1.string.toLowerCase().indexOf("mobile") != -1) {
                         self.txMobileNumber.node.getChildByName("red").active = true;
                     }
-                    
+
 
                     if (data.status == "region_restricted") {
-                        GameManager.popUpManager.show(PopUpType.AccessRestrictedPopup, self.txErrorMessageStep1.string, function() {});
+                        GameManager.popUpManager.show(PopUpType.AccessRestrictedPopup, self.txErrorMessageStep1.string, function () { });
                         self.txErrorMessageStep1.string = ""
                         self.gotoLogin();
                     }
@@ -409,7 +409,7 @@ var TXSignup = cc.Class({
                         self.resendCooldownSeconds = data.data.resendCooldownSeconds;
                         self.otpExpiresIn = data.data.otpExpiresIn;
 
-                        self.otpTimer = setInterval(function() {
+                        self.otpTimer = setInterval(function () {
                             self.resendCooldownSeconds -= 1;
                             self.txOTPLabel2.string = self.resendCooldownSeconds + "s";
                             if (self.resendCooldownSeconds <= 0) {
@@ -420,7 +420,7 @@ var TXSignup = cc.Class({
                             }
                         }.bind(self), 1000);
 
-                        self.otpExpTimer = setInterval(function() {
+                        self.otpExpTimer = setInterval(function () {
                             self.otpExpiresIn -= 1;
                             self.txOTPLabelExp.string = "OTP expires in " + self.formatSeconds(self.otpExpiresIn);
                             self.txOTPLabelExp.node.color = cc.Color.WHITE;
@@ -436,7 +436,7 @@ var TXSignup = cc.Class({
         );
     },
 
-    onResend: function() {
+    onResend: function () {
         this.txReSendOTPButton.interactable = false;
         this.txOTPDebug.string = "";
         this.txErrorMessageStep1.string = "";
@@ -451,7 +451,7 @@ var TXSignup = cc.Class({
             this.resendCooldownSeconds = data.data.resendCooldownSeconds;
             this.otpExpiresIn = data.data.otpExpiresIn;
 
-            this.otpTimer = setInterval(function() {
+            this.otpTimer = setInterval(function () {
                 this.resendCooldownSeconds -= 1;
                 this.txOTPLabel2.string = this.resendCooldownSeconds + "s";
                 if (this.resendCooldownSeconds <= 0) {
@@ -462,7 +462,7 @@ var TXSignup = cc.Class({
                 }
             }.bind(this), 1000);
 
-            this.otpExpTimer = setInterval(function() {
+            this.otpExpTimer = setInterval(function () {
                 this.otpExpiresIn -= 1;
                 this.txOTPLabelExp.string = "OTP expires in " + this.formatSeconds(this.otpExpiresIn);
                 this.txOTPLabelExp.node.color = cc.Color.WHITE;
@@ -475,7 +475,7 @@ var TXSignup = cc.Class({
         });
     },
 
-    onVerify: function() {
+    onVerify: function () {
         this.txOTPDebug.string = "";
         this.txErrorMessageStep2.string = "";
         this.txOptNumber.node.getChildByName("red").active = false;
@@ -502,7 +502,7 @@ var TXSignup = cc.Class({
         });
     },
 
-    onTogglePassword: function(target) {
+    onTogglePassword: function (target) {
         if (target.isChecked) {
             this.txPassword.inputFlag = cc.EditBox.InputFlag.DEFAULT;
         } else {
@@ -510,7 +510,7 @@ var TXSignup = cc.Class({
         }
     },
 
-    onTogglePasswordConfirm: function(target) {
+    onTogglePasswordConfirm: function (target) {
         if (target.isChecked) {
             this.txConfirmPassword.inputFlag = cc.EditBox.InputFlag.DEFAULT;
         } else {
