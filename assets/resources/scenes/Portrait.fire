@@ -285,9 +285,6 @@
         "__id__": 4548
       },
       {
-        "__id__": 305
-      },
-      {
         "__id__": 4635
       },
       {
@@ -1348,6 +1345,9 @@
       },
       {
         "__id__": 4300
+      },
+      {
+        "__id__": 305
       }
     ],
     "_active": true,
@@ -13706,7 +13706,7 @@
     "_name": "HomeNode",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 5
+      "__id__": 29
     },
     "_children": [
       {
@@ -23699,6 +23699,15 @@
       "__id__": 305
     },
     "_enabled": true,
+    "playerName": {
+      "__id__": 334
+    },
+    "playerId": {
+      "__id__": 341
+    },
+    "playerAvatar": {
+      "__id__": 324
+    },
     "_id": "32PT9q1UZEX63qw4iLuJur"
   },
   {
@@ -205008,7 +205017,7 @@
         "__id__": 4676
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 4689

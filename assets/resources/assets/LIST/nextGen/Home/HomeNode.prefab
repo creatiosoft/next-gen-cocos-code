@@ -10007,6 +10007,15 @@
       "__id__": 1
     },
     "_enabled": true,
+    "playerName": {
+      "__id__": 30
+    },
+    "playerId": {
+      "__id__": 37
+    },
+    "playerAvatar": {
+      "__id__": 20
+    },
     "_id": ""
   },
   {
