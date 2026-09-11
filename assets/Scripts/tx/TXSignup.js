@@ -94,6 +94,10 @@ var TXSignup = cc.Class({
             default: null,
             type: cc.Label,
         },
+        step2Email: {
+            default: null,
+            type: cc.Label,
+        },
     },
 
     onLoad: function () {
@@ -102,14 +106,16 @@ var TXSignup = cc.Class({
             var size = cc.size(cc.Canvas.instance.node.width, cc.Canvas.instance.node.height);
             var aspect = size.height / size.width; // 1.333
             let designAspect = 1704 / 786; // 2.1679389313
-
             this.node.scale = 0.8;
             cc.find("Step1/InputFields", this.node).scale = 0.85;
             cc.find("Step1/Heading", this.node).scale = 0.4;
-            cc.find("Step1/Logo", this.node).scale = 0.8;
-            cc.find("Step1/Logo", this.node).getComponent(cc.Widget).left = 180;
-            cc.find("Step1/Heading", this.node).getComponent(cc.Widget).left = 180;
-            cc.find("Step1/Heading", this.node).getComponent(cc.Widget).top = 200;
+            cc.find("Step1/EnterDetails", this.node).scale = 0.4;
+            // cc.find("Step1/Logo", this.node).scale = 0.8;
+            // cc.find("Step1/Logo", this.node).getComponent(cc.Widget).left = 180;
+            //cc.find("Step1/Heading", this.node).getComponent(cc.Widget).left = 180;
+            // cc.find("Step1/Heading", this.node).getComponent(cc.Widget).top = 200;
+            // cc.find("Step2", this.node).scale = 0.85;
+
         }
 
         this.playerId = "";
@@ -198,6 +204,7 @@ var TXSignup = cc.Class({
         this.txEmailId.string = txEmailId;
         this.txPassword.string = txPassword;
         this.txUserName.string = txUserName;
+        this.step2Email.string = txEmailId;
 
         this.txOTPLabel1.string = "";
         this.txOTPLabel2.string = "";
@@ -392,6 +399,7 @@ var TXSignup = cc.Class({
                     self.step2.active = true;
 
                     self.playerId = data.data.playerId;
+                    self.step2Email.string = self.txEmailId.string;
 
                     self.txOTPLabel1.string = "";
                     self.txOTPLabel2.string = "";
@@ -517,5 +525,16 @@ var TXSignup = cc.Class({
             this.txConfirmPassword.inputFlag = cc.EditBox.InputFlag.PASSWORD;
         }
     },
+    onTestStep2: function () {
+        this.step1.active = false;
+        this.step2.active = true;
+        this.playerId = "testPlayerId";
+        this.txEmailId.string = ""
+        this.step2Email.string = this.txEmailId.string;
+    },
+    onBackFromOtp: function () {
+        this.step1.active = true;
+        this.step2.active = false;
+    }
 
 });
