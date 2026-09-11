@@ -72,6 +72,14 @@ var TableContent = cc.Class({
             default: null,
             type: cc.Label,
         },
+        totalPlayerIcon: {
+            default: null,
+            type: cc.Sprite,
+        },
+        totalPlayerIcons: {
+            default: [],
+            type: cc.SpriteFrame,
+        },
     },
 
     statics: {
@@ -190,6 +198,12 @@ var TableContent = cc.Class({
             if (element) element.string = data[count];
             count++;
         }, this);
+        let totalActivePlayers = this.plyrText.string.split("/")[0];
+        for (let i = 0; i < this.totalPlayerIcons.length; i++) {
+            if (i == totalActivePlayers) {
+                this.totalPlayerIcon.spriteFrame = this.totalPlayerIcons[i];
+            }
+        }
     },
 
     /**
