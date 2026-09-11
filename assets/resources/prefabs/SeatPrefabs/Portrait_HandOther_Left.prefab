@@ -5518,8 +5518,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -139.971,
-        55.185,
+        -155.054,
+        47.342,
         0,
         0,
         0,
@@ -5574,8 +5574,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 64,
-      "height": 72
+      "width": 40,
+      "height": 48
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -5586,16 +5586,16 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        3.346,
-        -8.935,
+        1.183,
+        -0.284,
         0,
         0,
         0,
         0,
         1,
-        1,
-        1,
-        1
+        1.713,
+        1.713,
+        1.713
       ]
     },
     "_eulerAngles": {
@@ -5737,7 +5737,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "04e0174b-e742-4fbb-a185-5ce912803f4e"
+      "__uuid__": "e17d1187-5678-46a3-9b07-589ebf06f56c"
     },
     "_type": 0,
     "_sizeMode": 2,
@@ -5784,15 +5784,15 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 0,
+      "g": 0,
+      "b": 0,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 97.02
+      "width": 92.27,
+      "height": 88.2
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -5804,7 +5804,7 @@
       "ctor": "Float64Array",
       "array": [
         2.834,
-        -10.275,
+        -8.749,
         0,
         0,
         0,
@@ -5843,13 +5843,13 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "",
-    "_N$string": "",
-    "_fontSize": 77,
-    "_lineHeight": 77,
+    "_string": "20",
+    "_N$string": "20",
+    "_fontSize": 70,
+    "_lineHeight": 70,
     "_enableWrapText": false,
     "_N$file": {
-      "__uuid__": "a053652b-3a35-42c0-a127-eaea19953ffe"
+      "__uuid__": "ff8ad3b2-ca86-4439-95de-f4e6a3ae34d1"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,

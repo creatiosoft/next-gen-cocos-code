@@ -49,8 +49,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
-      "height": 150
+      "width": 80,
+      "height": 117
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -62,7 +62,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        0,
+        -1.2,
         0,
         0,
         0,
@@ -113,8 +113,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 98,
-      "height": 144
+      "width": 80,
+      "height": 116.76
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -125,8 +125,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -0.779,
-        1.931,
+        0.4,
+        -0.5,
         0,
         0,
         0,
@@ -220,8 +220,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 166,
-      "height": 203
+      "width": 80,
+      "height": 116.76
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -233,7 +233,7 @@
       "ctor": "Float64Array",
       "array": [
         0.09999999999999998,
-        2.796,
+        0,
         0,
         0,
         0,
@@ -340,8 +340,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
-      "height": 158
+      "width": 80,
+      "height": 117
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -352,8 +352,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
-        -5.141,
+        0.219,
+        -0.2,
         0,
         0,
         0,
@@ -407,8 +407,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 113,
-      "height": 112
+      "width": 75,
+      "height": 92
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -419,16 +419,16 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        8.895,
-        -28.414,
+        11.638,
+        -27.988,
         0,
         0,
         0,
         0,
         1,
-        0.55,
-        0.55,
-        1
+        0.488,
+        0.488,
+        0.488
       ]
     },
     "_eulerAngles": {
@@ -460,7 +460,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "ad2d5679-460e-441a-b4a9-5ffd5a5698d1"
+      "__uuid__": "8593cc87-29f6-49c2-80d4-38795821aa1f"
     },
     "_type": 0,
     "_sizeMode": 2,
@@ -491,8 +491,8 @@
     "_right": -1.5160000000000018,
     "_top": 0.6642335766423357,
     "_bottom": 2.9400000000000013,
-    "_verticalCenter": -28.414,
-    "_horizontalCenter": 8.895,
+    "_verticalCenter": -27.988,
+    "_horizontalCenter": 11.638,
     "_isAbsLeft": false,
     "_isAbsRight": true,
     "_isAbsTop": false,
@@ -534,15 +534,15 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 123,
-      "height": 108
+      "width": 75,
+      "height": 92
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -553,16 +553,16 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -26.101,
-        16.142,
+        -19.534,
+        -0.895,
         0,
         0,
         0,
         0,
         1,
-        0.25,
-        0.25,
-        1
+        0.274,
+        0.274,
+        1.096
       ]
     },
     "_eulerAngles": {
@@ -594,7 +594,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "6eee0912-b641-46b4-9215-b8588740472b"
+      "__uuid__": "8593cc87-29f6-49c2-80d4-38795821aa1f"
     },
     "_type": 0,
     "_sizeMode": 2,
@@ -648,8 +648,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 59.83,
-      "height": 100.8
+      "width": 44.84,
+      "height": 80.64
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -660,8 +660,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -26.562,
-        56.567,
+        -18.949,
+        36.693,
         0,
         0,
         0,
@@ -702,11 +702,11 @@
     "_dstBlendFactor": 771,
     "_string": "A",
     "_N$string": "A",
-    "_fontSize": 80,
-    "_lineHeight": 80,
+    "_fontSize": 64,
+    "_lineHeight": 64,
     "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "ff8ad3b2-ca86-4439-95de-f4e6a3ae34d1"
+      "__uuid__": "700a3173-5d20-4e10-8a88-b357f12323db"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
@@ -818,10 +818,10 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "ae855192-b4a0-427a-8f41-28dc7e8b88bf"
+      "__uuid__": "e11f2c63-36b2-41ee-9b0a-c86f77728bf6"
     },
     "_type": 0,
-    "_sizeMode": 2,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -927,30 +927,30 @@
     ],
     "texSuitBig": [
       {
-        "__uuid__": "70d22743-b248-4ec9-bbc4-fd0134714aef"
+        "__uuid__": "a9777160-ce89-4f50-a774-80ce7e3216d6"
       },
       {
-        "__uuid__": "6eee0912-b641-46b4-9215-b8588740472b"
+        "__uuid__": "fa3dc703-0699-46e2-9d7f-f931ab379312"
       },
       {
-        "__uuid__": "ad2d5679-460e-441a-b4a9-5ffd5a5698d1"
+        "__uuid__": "a65281bb-aa6c-4602-81c3-bc2e66953b05"
       },
       {
-        "__uuid__": "5f37a496-737f-49a6-8053-fb3d6823ad4c"
+        "__uuid__": "8593cc87-29f6-49c2-80d4-38795821aa1f"
       }
     ],
     "texSuitSmall": [
       {
-        "__uuid__": "70d22743-b248-4ec9-bbc4-fd0134714aef"
+        "__uuid__": "a9777160-ce89-4f50-a774-80ce7e3216d6"
       },
       {
-        "__uuid__": "6eee0912-b641-46b4-9215-b8588740472b"
+        "__uuid__": "fa3dc703-0699-46e2-9d7f-f931ab379312"
       },
       {
-        "__uuid__": "ad2d5679-460e-441a-b4a9-5ffd5a5698d1"
+        "__uuid__": "a65281bb-aa6c-4602-81c3-bc2e66953b05"
       },
       {
-        "__uuid__": "5f37a496-737f-49a6-8053-fb3d6823ad4c"
+        "__uuid__": "8593cc87-29f6-49c2-80d4-38795821aa1f"
       }
     ],
     "suit": null,
