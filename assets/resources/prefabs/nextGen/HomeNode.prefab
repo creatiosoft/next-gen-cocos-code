@@ -9082,8 +9082,10 @@
     "_normalMaterial": null,
     "_grayMaterial": null,
     "duration": 0.1,
-    "zoomScale": 0.98,
-    "clickEvents": [],
+    "zoomScale": 0.95,
+    "clickEvents": [
+      null
+    ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$transition": 3,

@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "1e30ce57-7ff9-4873-ac2f-e394dc96e854",
+  "uuid": "34061c4f-345d-446b-8e77-27a6cefb92c1",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,15 +8,15 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
-  "width": 80,
-  "height": 117,
+  "width": 716,
+  "height": 138,
   "platformSettings": {},
   "subMetas": {
-    "bg": {
+    "emojiContent": {
       "ver": "1.0.6",
-      "uuid": "e11f2c63-36b2-41ee-9b0a-c86f77728bf6",
+      "uuid": "06637430-fa1e-4c29-a2bc-3973170eae14",
       "importer": "sprite-frame",
-      "rawTextureUuid": "1e30ce57-7ff9-4873-ac2f-e394dc96e854",
+      "rawTextureUuid": "34061c4f-345d-446b-8e77-27a6cefb92c1",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -24,14 +24,14 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 80,
-      "height": 117,
-      "rawWidth": 80,
-      "rawHeight": 117,
-      "borderTop": 0,
-      "borderBottom": 0,
-      "borderLeft": 0,
-      "borderRight": 0,
+      "width": 716,
+      "height": 138,
+      "rawWidth": 716,
+      "rawHeight": 138,
+      "borderTop": 30,
+      "borderBottom": 30,
+      "borderLeft": 30,
+      "borderRight": 30,
       "subMetas": {}
     }
   }
