@@ -208,12 +208,12 @@ var PlayerPresenter = cc.Class({
             default: null,
             type: cc.Node,
         },
-        
+
         reservedPanel: {
             default: null,
             type: cc.Node,
         },
-        
+
         chatHead: {
             default: null,
             type: cc.Node,
@@ -278,7 +278,7 @@ var PlayerPresenter = cc.Class({
     onLoad: function () {
 
         this.longPressDetection.normalCallback = this.normalCallback.bind(this);
-        
+
         this.imageLoadedRef = this.imageLoaded.bind(this);
         GameManager.on("image-loaded", this.imageLoadedRef);
         GameManager.on("updatePlayerImageInTable", this.updatePlayerImageInTable.bind(this));
@@ -369,12 +369,12 @@ var PlayerPresenter = cc.Class({
 
         if ((this.node.parent.x < 0 && GameManager.isMobile) || this.isSelf()) {
             if (GameManager.isMobile) {
-                this.amountLabel.node.x = -195;
-                this.nameLabel.node.x = -195;
-                this.amountLabel.node.parent.getChildByName("bb").x = -195;
-                this.node.getChildByName("BB").x = 94 - 10;
-                this.node.getChildByName("SB").x = 94 - 10;
-                this.moveShower.x = -44;
+                //this.amountLabel.node.x = -195;
+                //   this.nameLabel.node.x = -195;
+                // this.amountLabel.node.parent.getChildByName("bb").x = -195;
+                // this.node.getChildByName("BB").x = 94 - 10;
+                // this.node.getChildByName("SB").x = 94 - 10;
+                //this.moveShower.x = -44;
             }
         } else {
             if (GameManager.isMobile) {
@@ -1174,7 +1174,7 @@ var PlayerPresenter = cc.Class({
             this.reservedPanel.active = false;
             this.grayer.active = false;
             this.grayer2.active = false;
-            
+
             if (this._isRebuying) {
                 this.amountLabel.string = "";
                 return;
@@ -1449,6 +1449,9 @@ var PlayerPresenter = cc.Class({
                 }
             }
             instance.setPosition(x, y);
+            if (cardComponent.isMyCard) {
+                instance.scale = 1.35;
+            }
         }, this);
     },
 
@@ -1494,13 +1497,13 @@ var PlayerPresenter = cc.Class({
 
         } else {
             if (card.length == 2) {
-                this.cardHolderShow.scale = 1.1;
+                this.cardHolderShow.scale = 1.35;
             } else if (card.length == 4) {
-                this.cardHolderShow.scale = 0.9;
+                this.cardHolderShow.scale = 1.25;
             } else if (card.length == 5) {
-                this.cardHolderShow.scale = 0.7;
+                this.cardHolderShow.scale = 1.16;
             } else if (card.length == 6) {
-                this.cardHolderShow.scale = 0.6;
+                this.cardHolderShow.scale = 1;
             }
         }
     },
@@ -1721,9 +1724,9 @@ var PlayerPresenter = cc.Class({
         if (this.isSelf()) { } else {
             if (GameManager.isMobile) {
                 if ((this.node.parent.x < 0)) {
-                    this.cardHolder.x = 27;
+                    this.cardHolder.x = 70;
                 } else {
-                    this.cardHolder.x = -27;
+                    this.cardHolder.x = -70;
                 }
             }
         }

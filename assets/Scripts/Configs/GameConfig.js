@@ -17,7 +17,7 @@ var root = window;
 root.K = {};
 
 // "cleanup" | "qa" | "prod"
-root.K.ActiveServer = "qa";
+root.K.ActiveServer = "cleanup";
 
 root.K.AppVersion = {
     appVersion: "1.14",
@@ -31,27 +31,27 @@ if (root.K.ActiveServer === "prod" || root.K.ActiveServer === "production") {
 var SERVER_PRESETS = {
     cleanup: {
         address: {
-            ipAddress: "https://connector-txsocial-cleanup.creatiosoft.dev",
-            gameServer: "https://connector-txsocial-cleanup.creatiosoft.dev",
+            ipAddress: "https://connector-nextgengames-dev.creatiosoft.dev",
+            gameServer: "https://connector-nextgengames-dev.creatiosoft.dev",
             gamePort: 443,
-            maintainanceIP: "https://maintenance-dashboard-api-txsocial-cleanup.creatiosoft.dev",
+            maintainanceIP: "https://maintenance-dashboard-api-nextgengames-dev.creatiosoft.dev",
             maintainancePort: 443,
             port: 443,
             wss: true,
             clientVer: "1.4",
             pokerVer: "0.0",
-            assets_server: "https://cashgame-dashboard-api-txsocial-cleanup.creatiosoft.dev",
-            assets_server_s: "https://txpoker-dev-assets.s3.us-east-1.amazonaws.com",
-            otp_server: "https://auth-api-txsocial-cleanup.creatiosoft.dev",
-            otp_new_server: "https://auth-txsocial-cleanup.creatiosoft.dev",
-            ads_server: "https://cashgame-dashboard-api-txsocial-cleanup.creatiosoft.dev",
-            payment_html: "https://auth-api-txsocial-cleanup.creatiosoft.dev/demo/payment-demo.html",
+            assets_server: "https://cashgame-dashboard-api-nextgengames-dev.creatiosoft.dev",
+            assets_server_s: "https://nextgengames-dev-assets.s3.us-east-1.amazonaws.com",
+            otp_server: "https://auth-api-nextgengames-dev.creatiosoft.dev",
+            otp_new_server: "https://auth-nextgengames-dev.creatiosoft.dev",
+            ads_server: "https://cashgame-dashboard-api-nextgengames-dev.creatiosoft.dev",
+            payment_html: "https://auth-api-nextgengames-dev.creatiosoft.dev/demo/payment-demo.html",
             agora_appid: "d19330a189e441b7b5bdf29ffb35b6d4",
-            tournamentServer: "https://tournament-connector-txsocial-cleanup.creatiosoft.dev"
+            tournamentServer: "https://tournament-connector-nextgengames-dev.creatiosoft.dev"
         },
         token: {
-            auth_server: "https://auth-api-txsocial-cleanup.creatiosoft.dev/api/auth/login/",
-            auth_refresh_server: "https://auth-api-txsocial-cleanup.creatiosoft.dev/api/auth/refresh"
+            auth_server: "https://auth-api-nextgengames-dev.creatiosoft.dev/api/auth/login/",
+            auth_refresh_server: "https://auth-api-nextgengames-dev.creatiosoft.dev/api/auth/refresh"
         }
     },
     qa: {
