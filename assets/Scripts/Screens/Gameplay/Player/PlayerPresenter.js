@@ -10,6 +10,19 @@ var PopUpManager = require('PopUpManager').PopUpManager;
 var PopUpType = require('PopUpManager').PopUpType;
 var changeAvatar = require('ResponseTypes').changeAvatar;
 
+var HAND_STRENGTH_RANK = {
+    "High Card": 0,
+    "One Pair": 1,
+    "Two Pair": 2,
+    "Three Of A Kind": 3,
+    "Straight": 4,
+    "Flush": 5,
+    "Full House": 6,
+    "Four Of A Kind": 7,
+    "Straight Flush": 8,
+    "Royal Flush": 9,
+};
+
 /**
  * @classdesc Handles player View
  * @class PlayerPresenter
@@ -378,14 +391,14 @@ var PlayerPresenter = cc.Class({
             }
         } else {
             if (GameManager.isMobile) {
-                this.amountLabel.node.x = -135;
-                this.nameLabel.node.x = -135;
-                this.amountLabel.node.parent.getChildByName("bb").x = -135;
+                // this.amountLabel.node.x = -135;
+                // this.nameLabel.node.x = -135;
+                // this.amountLabel.node.parent.getChildByName("bb").x = -135;
 
-                this.node.getChildByName("BB").x = -94 + 10;
-                this.node.getChildByName("SB").x = -94 + 10;
+                this.node.getChildByName("BB").x = -55;
+                this.node.getChildByName("SB").x = -55;
 
-                this.moveShower.x = 44;
+                //  this.moveShower.x = 44;
             }
         }
 
@@ -2790,6 +2803,7 @@ var PlayerPresenter = cc.Class({
     },
 
     onBestHand(bestHand, lowBestHand = "", board2BestHand = "") {
+        console.log("onBestHand", bestHand, board2BestHand);
         if (!GameManager.user.settings.handStrength) {
             return;
         }
@@ -2806,29 +2820,65 @@ var PlayerPresenter = cc.Class({
         function extractMiddle(str) {
             let afterColon = str.includes(':') ? str.split(':')[0] : str;
             const lastCommaIndex = afterColon.lastIndexOf(',');
-            let result = lastCommaIndex === -1 ?
-                afterColon :
-                afterColon.slice(0, lastCommaIndex).trim();
-
-            return result;
+            const result = lastCommaIndex === -1 ? afterColon : afterColon.slice(0, lastCommaIndex);
+            return result.trim();
         }
 
-        if (lowBestHand == "") {
-            if (board2BestHand == "") {
-                this.bestHandNode.getChildByName("bg").getChildByName("info").getComponent(cc.Label).string = extractMiddle(bestHand) + lowBestHand;
-                this.bestHandNode.getChildByName("bg").height = 80;
-                this.bestHandNode.getChildByName("bg").getChildByName("info").y = 10.803;
-            }
-            else {
-                this.bestHandNode.getChildByName("bg").getChildByName("info").getComponent(cc.Label).string = (extractMiddle(bestHand) + "\n" + extractMiddle(board2BestHand));
-                this.bestHandNode.getChildByName("bg").height = 111;
-                this.bestHandNode.getChildByName("bg").getChildByName("info").y = 17.218;
+        let bg = this.bestHandNode.getChildByName("bg");
+        let info = bg.getChildByName("info");
+
+        if (board2BestHand != "") {
+            info.getComponent(cc.Label).string = extractMiddle(bestHand) + "\n" + extractMiddle(board2BestHand);
+            bg.height = 111;
+            info.y = 17.218;
+        } else {
+            info.getComponent(cc.Label).string = extractMiddle(bestHand);
+            bg.height = 80;
+            info.y = 10.803;
+        }
+
+        this.applyHandStrengthBar("HandStrenth", extractMiddle(bestHand));
+        let handStrenthCopy = this.bestHandNode.getChildByName("HandStrenth copy");
+        if (handStrenthCopy) {
+            if (board2BestHand != "") {
+                handStrenthCopy.active = true;
+                this.applyHandStrengthBar("HandStrenth copy", extractMiddle(board2BestHand));
+            } else {
+                handStrenthCopy.active = false;
             }
         }
-        else {
-            this.bestHandNode.getChildByName("bg").getChildByName("info").getComponent(cc.Label).string = ("H:" + extractMiddle(bestHand) + "\nL: " + lowBestHand);
-            this.bestHandNode.getChildByName("bg").height = 111;
-            this.bestHandNode.getChildByName("bg").getChildByName("info").y = 17.218;
+    },
+
+    /**
+     * @description Enables the hand-strength bar segments (0-9) up to the reached rank
+     * @method applyHandStrengthBar
+     * @param {String} barNodeName -"HandStrenth" or "HandStrenth copy"
+     * @param {String} handName -extracted hand name, e.g. "Two Pair"
+     * @memberof Screens.Gameplay.Player.PlayerPresenter#
+     */
+    applyHandStrengthBar: function (barNodeName, handName) {
+        let barNode = this.bestHandNode.getChildByName(barNodeName);
+        if (!barNode) {
+            console.warn("applyHandStrengthBar: bar node not found", barNodeName);
+            return;
+        }
+        let segmentsRoot = barNode.getChildByName("bg");
+        if (!segmentsRoot) {
+            console.warn("applyHandStrengthBar: 'bg' segments root not found under", barNodeName);
+            return;
+        }
+        let rank = HAND_STRENGTH_RANK[handName];
+        if (rank === undefined) {
+            console.warn("applyHandStrengthBar: no rank mapping for hand name", JSON.stringify(handName));
+            rank = -1;
+        }
+        for (let i = 0; i < 10; i++) {
+            let segment = segmentsRoot.getChildByName(i + "");
+            if (!segment) {
+                console.warn("applyHandStrengthBar: segment node not found", i, "under", barNodeName);
+                continue;
+            }
+            segment.active = (i <= rank);
         }
     },
 
