@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "b436b391-060f-4fa2-aee4-71cecd69366b",
+  "uuid": "13efb315-0603-4775-9437-1ddb0e70d0a9",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,15 +8,15 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
-  "width": 217,
-  "height": 293,
+  "width": 489,
+  "height": 8,
   "platformSettings": {},
   "subMetas": {
-    "Card Back": {
+    "Progress Bar Container": {
       "ver": "1.0.6",
-      "uuid": "fae60085-2cea-4bd0-9b28-9e6d32486a12",
+      "uuid": "0eb2d6ff-8ccf-451f-b1fd-e97828eac2d4",
       "importer": "sprite-frame",
-      "rawTextureUuid": "b436b391-060f-4fa2-aee4-71cecd69366b",
+      "rawTextureUuid": "13efb315-0603-4775-9437-1ddb0e70d0a9",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -24,14 +24,14 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 217,
-      "height": 293,
-      "rawWidth": 217,
-      "rawHeight": 293,
+      "width": 489,
+      "height": 8,
+      "rawWidth": 489,
+      "rawHeight": 8,
       "borderTop": 0,
       "borderBottom": 0,
-      "borderLeft": 0,
-      "borderRight": 0,
+      "borderLeft": 90,
+      "borderRight": 90,
       "subMetas": {}
     }
   }

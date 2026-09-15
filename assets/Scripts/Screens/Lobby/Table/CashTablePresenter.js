@@ -125,6 +125,15 @@ var CashTablePresenter = cc.Class({
             default: null,
             type: cc.Label,
         },
+        totalPlayers: {
+            default: null,
+            type: cc.Label,
+        },
+        totalTables: {
+            default: null,
+            type: cc.Label,
+        },
+
         isAll: true,
         isRit: false,
         isDoubleBoard: false,
@@ -141,21 +150,55 @@ var CashTablePresenter = cc.Class({
      * @description Life Cycle callback, call super() method; 
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    onEnable: function() {
+    onEnable: function () {
         this._super();
 
         GameManager.on("TableSelected", this.onTableSelected.bind(this));
 
-        GameManager.on("waiting_List_Event", function(channelId, flag) {
+        GameManager.on("waiting_List_Event", function (channelId, flag) {
             if (TableContent.prevSelection !== null && TableContent.prevSelection.channelData._id == channelId) {
                 this.onAlreadyJoined(flag);
             }
         }.bind(this));
 
         this.applyRoomHeader();
+        this.updateTotalStats();
     },
 
-    applyRoomHeader: function() {
+    /**
+     * @method applyFilter
+     * @description Extends Table.js applyFilter to also refresh the room header's
+     * total tables/players stats whenever table data is (re)loaded or filtered.
+     * @memberof Screens.Lobby.Table.CashTablePresenter#
+     */
+    applyFilter: function (isRequested) {
+        this._super(isRequested);
+        this.updateTotalStats();
+    },
+
+    /**
+     * @method updateTotalStats
+     * @description Updates the room header's total table count and total playing-players count
+     * @memberof Screens.Lobby.Table.CashTablePresenter#
+     */
+    updateTotalStats: function () {
+        if (!this.totalTables && !this.totalPlayers) {
+            return;
+        }
+        var contents = (this.handler && this.handler.contents) ? this.handler.contents : [];
+        if (this.totalTables) {
+            this.totalTables.string = contents.length + "";
+        }
+        if (this.totalPlayers) {
+            var totalPlaying = 0;
+            for (var i = 0; i < contents.length; i++) {
+                totalPlaying += (contents[i].playingPlayers || 0);
+            }
+            this.totalPlayers.string = totalPlaying + "";
+        }
+    },
+
+    applyRoomHeader: function () {
         if (!this.room) {
             return;
         }
@@ -192,7 +235,7 @@ var CashTablePresenter = cc.Class({
         }
     },
 
-    onRoomUpdate: function(eventData) {
+    onRoomUpdate: function (eventData) {
         GameManager.emit("onRoomUpdate2", eventData);
     },
 
@@ -202,7 +245,7 @@ var CashTablePresenter = cc.Class({
      * @description Method called for everytime a table is clicked
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    tableContentClick: function() {
+    tableContentClick: function () {
         if (TableContent.prevSelection !== null) {
             this.tempSelection = this.contentPool.indexOf(TableContent.prevSelection.node);
         }
@@ -214,14 +257,14 @@ var CashTablePresenter = cc.Class({
      * @param {object} data -Table content data!
      * @memberof  CashTablePresenter#
      */
-    addTable: function(data) {
+    addTable: function (data) {
         if (data.updated.channelType == K.ChannelType.Normal) {
             this._super(data);
         }
     },
 
 
-    onHFTSound: function() {
+    onHFTSound: function () {
         GameManager.playSound(K.Sounds.click);
         this.applyFilter();
     },
@@ -232,7 +275,7 @@ var CashTablePresenter = cc.Class({
      * @param {object} data -
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    makeContent: function(data) {
+    makeContent: function (data) {
         if (this.variation == K.Variation.OpenFaceChinesePoker) {
             var content = [data.channelName, data.chipsPointRatio, data.channelVariation, GameManager.getGameTypeByValue(data.turnTime), data.minBuyIn, data.maxBuyIn, data.playingPlayers + "/" + data.maxPlayers, data.queuePlayers];
         } else {
@@ -256,7 +299,7 @@ var CashTablePresenter = cc.Class({
      * @description Join button callback(Observe btn)
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    onJoinTable: function() {
+    onJoinTable: function () {
         if (TableContent.prevSelection === null) {
             return;
         }
@@ -274,13 +317,13 @@ var CashTablePresenter = cc.Class({
      * @description Show Join Waiting List String over join Button and call joinWaitingList  of TableHandler
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    onJoinWaitingList: function() {
+    onJoinWaitingList: function () {
         if (TableContent.prevSelection === null) {
             return;
         }
         var flag = this.joinWaitingListBtn.node.children[0].children[2].getComponent(cc.Label).string == "Join Wait List";
         if (TableContent.prevSelection.channelData.isPrivateTabel == "true" && flag) {
-            let func = function(response, closePopupFunc) {
+            let func = function (response, closePopupFunc) {
                 if (response.success) {
                     GameManager.emit("waiting_List_Event", response.channelId, flag);
                     closePopupFunc();
@@ -294,14 +337,14 @@ var CashTablePresenter = cc.Class({
                 cb: func,
                 toCallFunction: this.handler.joinWaitingList,
             };
-            GameManager.popUpManager.show(30, privateData, function() {});
+            GameManager.popUpManager.show(30, privateData, function () { });
 
         } else {
-            this.handler.joinWaitingList(flag, TableContent.prevSelection.channelData._id, function(response) {
+            this.handler.joinWaitingList(flag, TableContent.prevSelection.channelData._id, function (response) {
                 if (response.success) {
                     GameManager.emit("waiting_List_Event", response.channelId, flag);
                 }
-            }.bind(this), function(errorResponse) {});
+            }.bind(this), function (errorResponse) { });
         }
     },
 
@@ -311,7 +354,7 @@ var CashTablePresenter = cc.Class({
      * @param {boolean} flag -
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    onAlreadyJoined: function(flag) {},
+    onAlreadyJoined: function (flag) { },
 
 
     /**
@@ -319,7 +362,7 @@ var CashTablePresenter = cc.Class({
      * @description Autosit callback(join button)
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    onAutoSit: function() {
+    onAutoSit: function () {
         // GameManager.playSound(K.Sounds.click);
         if (TableContent.prevSelection === null) {
             return;
@@ -340,7 +383,7 @@ var CashTablePresenter = cc.Class({
      * @param {object} data -Data for side table update
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    onSideTableUpdate: function(data) {
+    onSideTableUpdate: function (data) {
         GameManager.emit("updateWaitingPlayers", data);
         if (TableContent.prevSelection == null || this.contentPool.length == 0) {
             return;
@@ -386,7 +429,7 @@ var CashTablePresenter = cc.Class({
      * @param {object} response - Data received from server to set in side table!
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    setSideTableData: function(response) {
+    setSideTableData: function (response) {
         GameManager.removeAllChildren(this.tableInfoHolder);
         if (TableContent.prevSelection != null && !GameManager.isMobile) {
             this.sideTableNameLbl.string = TableContent.prevSelection.channelData.channelName;
@@ -403,7 +446,7 @@ var CashTablePresenter = cc.Class({
             if (response.isAlreadyPlaying) {
                 this.joinWaitingListBtn.node.active = response.isAlreadyPlaying ? false : true;
             }
-            if (TableContent.prevSelection != null && TableContent.prevSelection.channelData.isPrivateTabel == "true") {}
+            if (TableContent.prevSelection != null && TableContent.prevSelection.channelData.isPrivateTabel == "true") { }
             if (!GameManager.isMobile) {
                 if (response.players.length > 0) {
                     for (var i = 0; i < response.players.length; i++) {
@@ -426,7 +469,7 @@ var CashTablePresenter = cc.Class({
      * @param {boolean} isWaiting -flag to show if player is waiting or not
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    addPlayerInView: function(player, isWaiting = false) {},
+    addPlayerInView: function (player, isWaiting = false) { },
 
 
     /**
@@ -436,7 +479,7 @@ var CashTablePresenter = cc.Class({
      * @param {Array} playerArray -List of all players!   
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    removePlayer: function(playerId, playersArray) {
+    removePlayer: function (playerId, playersArray) {
         if (playersArray.length > 0) {
             var index = -1;
             for (var i = 0; i < playersArray.length; i++) {
@@ -458,7 +501,7 @@ var CashTablePresenter = cc.Class({
      * @param {Array} playerArray -List of players!
      * @memberof Screens.Lobby.Table.CashTablePresenter#
      */
-    updateChips: function(playerId, chips) {
+    updateChips: function (playerId, chips) {
         if (this.currentSideTableData.players.length > 0) {
             var index = -1;
             for (var i = 0; i < this.currentSideTableData.players.length; i++) {
@@ -473,21 +516,21 @@ var CashTablePresenter = cc.Class({
         }
     },
 
-    onBuyInConfirm: function(index, amount) {
+    onBuyInConfirm: function (index, amount) {
         let self = this;
         ServerCom.pomeloRequest(
             'room.channelHandler.quickSeat', {
-                roomId: this.roomId,
-                isLoggedIn: true,
-                access_token: K.Token.access_token,
-                imageAvtar: '',
-                chips: Number(amount),
-                playerId: GameManager.user.playerId,
-                playerName: GameManager.user.userName,
-                isRequested: true,
+            roomId: this.roomId,
+            isLoggedIn: true,
+            access_token: K.Token.access_token,
+            imageAvtar: '',
+            chips: Number(amount),
+            playerId: GameManager.user.playerId,
+            playerName: GameManager.user.userName,
+            isRequested: true,
 
-            },
-            function(response) {
+        },
+            function (response) {
                 var route = K.PomeloAPI.joinChannel;
                 GameManager.join2(response.data.channelId, route, {
                     "channelId": response.data.channelId,
@@ -504,7 +547,7 @@ var CashTablePresenter = cc.Class({
         );
     },
 
-    quickSeat: function() {
+    quickSeat: function () {
         let room = null;
         for (var i = 0; i < this.roomData.length; i++) {
             if (this.roomData[i]._id == this.roomId) {
@@ -522,7 +565,7 @@ var CashTablePresenter = cc.Class({
         }
 
         if (GameManager.activeTableCount >= GameManager.maxTableCounts) {
-            GameManager.popUpManager.show(PopUpType.MaxTablesJoinedPopup, null, function() {});
+            GameManager.popUpManager.show(PopUpType.MaxTablesJoinedPopup, null, function () { });
             return;
         }
 
@@ -548,15 +591,15 @@ var CashTablePresenter = cc.Class({
         data.isAllInAndFold = room.isAllInAndFold;
         data.topHeading = "Buy In";
         data.quickSeat = true;
-        GameManager.popUpManager.show(PopUpType.BuyInPopup, data, function() {});
+        GameManager.popUpManager.show(PopUpType.BuyInPopup, data, function () { });
     },
 
-    leaveLobby: function() {
+    leaveLobby: function () {
         this.contentHolder.removeAllChildren();
     },
 
 
-    onRitFilterButton: function() {
+    onRitFilterButton: function () {
         if (this.isRit) {
             this.isRit = false;
             this.ritFilterButton.node.getChildByName("pressed").active = false;
@@ -574,7 +617,7 @@ var CashTablePresenter = cc.Class({
         }
     },
 
-    onDoubleBoardFilterButton: function() {
+    onDoubleBoardFilterButton: function () {
         if (this.isDoubleBoard) {
             this.isDoubleBoard = false;
             this.doubleBoardFilterButton.node.getChildByName("pressed").active = false;
@@ -592,7 +635,7 @@ var CashTablePresenter = cc.Class({
         }
     },
 
-    onBombPotFilterButton: function() {
+    onBombPotFilterButton: function () {
         if (this.isBombPot) {
             this.isBombPot = false;
             this.bombPotFilterButton.node.getChildByName("pressed").active = false;
@@ -610,7 +653,7 @@ var CashTablePresenter = cc.Class({
         }
     },
 
-    onTurboFilterButton: function() {
+    onTurboFilterButton: function () {
         if (this.isTurbo) {
             this.isTurbo = false;
             this.turboFilterButton.node.getChildByName("pressed").active = false;
@@ -628,7 +671,7 @@ var CashTablePresenter = cc.Class({
         }
     },
 
-    resetAllFilters: function() {
+    resetAllFilters: function () {
         if (this.isRit) {
             this.isRit = false;
             this.ritFilterButton.node.getChildByName("pressed").active = false;
@@ -640,7 +683,7 @@ var CashTablePresenter = cc.Class({
         this.isAll = true;
     },
 
-    onTableSelected: function(data) {
+    onTableSelected: function (data) {
         if (this.cashTablePreview) {
             this.cashTablePreview.showPreview(data);
         }

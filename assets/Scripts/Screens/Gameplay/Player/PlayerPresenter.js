@@ -1450,7 +1450,7 @@ var PlayerPresenter = cc.Class({
             }
             instance.setPosition(x, y);
             if (cardComponent.isMyCard) {
-                instance.scale = 1.35;
+                instance.scale = 1.25;
             }
         }, this);
     },
