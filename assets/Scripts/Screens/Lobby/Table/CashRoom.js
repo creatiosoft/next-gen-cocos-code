@@ -102,6 +102,26 @@ var CashRoom = cc.Class({
             default: null,
             type: cc.Toggle,
         },
+
+        sortByNode: {
+            default: null,
+            type: cc.Node
+        },
+
+        allFilterNode: {
+            default: [],
+            type: cc.Node
+        },
+
+        filterCountLabel: {
+            default: null,
+            type: cc.Label
+        },
+
+        sortToggleContainer: {
+            default: null,
+            type: cc.ToggleContainer
+        },
     },
 
     statics: {
@@ -163,18 +183,27 @@ var CashRoom = cc.Class({
             cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {
                 if (!err) {
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = true;
+                    ploTag.children[0].getComponent(cc.Label).string = 4;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO";
                 }
             });
         } else if (data.channelVariation == 'Omaha 5') {
-            cc.loader.loadRes('assets/TAGS/plo5', cc.SpriteFrame, function(err, tex) {
+            cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {//assets/TAGS/plo5
                 if (!err) {
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = true;
+                    ploTag.children[0].getComponent(cc.Label).string = 5;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO5";
                 }
             });
         } else if (data.channelVariation == 'Omaha 6') {
-            cc.loader.loadRes('assets/TAGS/plo6c', cc.SpriteFrame, function(err, tex) {
+            cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {//assets/TAGS/plo6c
                 if (!err) {
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = true;
+                    ploTag.children[0].getComponent(cc.Label).string = 6;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO6";
                 }
             });
         } else if (data.channelVariation == 'Mega Hold’em') {
@@ -190,9 +219,12 @@ var CashRoom = cc.Class({
                 }
             });
         } else if (data.channelVariation == 'Big O') {
-            cc.loader.loadRes('assets/TAGS/plo8', cc.SpriteFrame, function(err, tex) {
+            cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {//assets/TAGS/plo8
                 if (!err) {
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = true;
+                    ploTag.children[0].getComponent(cc.Label).string = 8;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO8";
                 }
             });
         } else {
@@ -545,7 +577,8 @@ var CashRoom = cc.Class({
             }
             cc.find('TableName', instance).getComponent(cc.Label).string = data[i].roomName;
             cc.find('avgPot', instance).getComponent(cc.Label).string = GameManager.convertChips(data[i].smallBlind) + "/" + GameManager.convertChips(data[i].bigBlind) + "";
-
+            let ploTag = cc.find('l/tag', instance);
+            ploTag.active = false;
             if (data[i].liveStreaming == true) {
                 cc.find('tags/live', instance).active = true;
             } else {
@@ -571,51 +604,65 @@ var CashRoom = cc.Class({
             }
 
             if (data[i].gameInfo.GameVariation == 'Texas Hold’em') {
-                cc.loader.loadRes('assets/TAGS/holdem', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/holdem', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Omaha') {
-                cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                        ploTag.active = true;
+                        ploTag.children[0].getComponent(cc.Label).string = 4;
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO";
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Omaha 5') {
-                cc.loader.loadRes('assets/TAGS/plo5', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                        ploTag.active = true;
+                        ploTag.children[0].getComponent(cc.Label).string = 5;
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO5";
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Omaha 6') {
-                cc.loader.loadRes('assets/TAGS/plo6c', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function (err, tex) {//assets/TAGS/plo6c
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                        ploTag.active = true;
+                        ploTag.children[0].getComponent(cc.Label).string = 6;
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO6";
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Mega Hold’em') {
-                cc.loader.loadRes('assets/TAGS/mega', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/mega', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Mixed Game') {
-                cc.loader.loadRes('assets/TAGS/mixed', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/mixed', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Big O') {
-                cc.loader.loadRes('assets/TAGS/plo8', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function (err, tex) {//assets/TAGS/plo8
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                        ploTag.active = true;
+                        ploTag.children[0].getComponent(cc.Label).string = 8;
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO8";
                     }
                 });
             } else {
-                cc.loader.loadRes('assets/TAGS/holdem', cc.SpriteFrame, function(err, tex) {
+                cc.loader.loadRes('assets/TAGS/holdem', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "NLH";
                     }
                 });
             }
@@ -1131,5 +1178,29 @@ var CashRoom = cc.Class({
             cc.find("bg2", elem).active = false;
             cc.find("bg", elem).active = true;
         });
-    }
+    },
+
+    getFilterCount(){
+        let count= 0;
+        for (let a = 0; a < this.allFilterNode.length; a++) {
+            if (this.allFilterNode[a].getChildByName("pressed").active) {
+                count++;
+            }
+        }
+        this.filterCountLabel.node.parent.active = count > 0;
+        this.filterCountLabel.string = count + "";
+    },
+
+    showSortByPopup(){       
+        this.sortByNode.active = !this.sortByNode.active;
+    },
+
+    hideSortByPopup(){       
+        this.sortByNode.active = false;
+    },
+
+    onClickApplySortFilter() {
+        // CashRoom.sortPlayers = this.sortToggleContainer
+        // this.onDoSort
+    },
 });

@@ -134,6 +134,24 @@ var CashTablePresenter = cc.Class({
             type: cc.Label,
         },
 
+        roomBlindsValue: {
+            default: null,
+            type: cc.Label,
+        },
+        roomTag: {
+            default: null,
+            type: cc.Label,
+        },
+
+        roomTagIcon: {
+            default: null,
+            type: cc.Sprite,
+        },
+        roomTagIconsSpriteFrame: {
+            default: [],
+            type: cc.SpriteFrame,
+        },
+
         isAll: true,
         isRit: false,
         isDoubleBoard: false,
@@ -196,6 +214,44 @@ var CashTablePresenter = cc.Class({
             }
             this.totalPlayers.string = totalPlaying + "";
         }
+
+        if (this.roomData) {
+            let room = null;
+            for (var i = 0; i < this.roomData.length; i++) {
+                if (this.roomData[i]._id == this.roomId) {
+                    room = this.roomData[i];
+                    break;
+                }
+            }
+            this.roomBlindsValue.string = room.smallBlind + "/" + room.bigBlind;
+
+            if (room.channelVariation == 'Texas Hold’em') {
+                this.roomTag.string = "NLH";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];                
+            } else if (room.channelVariation == 'Omaha') {
+                this.roomTag.string = "PLO";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+            } else if (room.channelVariation == 'Omaha 5') {
+                this.roomTag.string = "PLO5";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+            } else if (room.channelVariation == 'Omaha 6') {
+                this.roomTag.string = "PLO6";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+            } else if (room.channelVariation == 'Mega Hold’em') {
+                this.roomTag.string = "MEGA";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];
+            } else if (room.channelVariation == 'Mixed Game') {
+                this.roomTag.string = "MIXED";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];
+            } else if (room.channelVariation == 'Big O') {
+                this.roomTag.string = "PLO8";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+            } else {
+                this.roomTag.string = "NLH";
+                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];
+            }
+            this.room.string = this.roomTag.string;
+        }
     },
 
     applyRoomHeader: function () {
@@ -211,10 +267,10 @@ var CashTablePresenter = cc.Class({
                 }
             }
             if (!room) {
-                this.room.string = "";
+                // this.room.string = "";
                 return;
             }
-            this.room.string = room.roomName;
+            // this.room.string = room.roomName;
 
             this.ritFilterButton.node.getChildByName("pressed").active = room.isRunItTwice;
             this.turboFilterButton.node.getChildByName("pressed").active = room.turnTime == 10;
@@ -231,7 +287,7 @@ var CashTablePresenter = cc.Class({
                 this.doubleBombFilterButton.node.getChildByName("pressed").active = false;
             }
         } else {
-            this.room.string = "";
+            // this.room.string = "";
         }
     },
 

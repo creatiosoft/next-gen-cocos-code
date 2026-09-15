@@ -8,7 +8,7 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
-  "width": 135,
+  "width": 176,
   "height": 76,
   "platformSettings": {},
   "subMetas": {
@@ -24,14 +24,14 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 135,
+      "width": 176,
       "height": 76,
-      "rawWidth": 135,
+      "rawWidth": 176,
       "rawHeight": 76,
       "borderTop": 0,
       "borderBottom": 0,
-      "borderLeft": 0,
-      "borderRight": 0,
+      "borderLeft": 21,
+      "borderRight": 67,
       "subMetas": {}
     }
   }
