@@ -133,6 +133,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        homeScreenNode: {
+            default: null,
+            type: cc.Node
+        },
 
         lockClick: false,
     },
@@ -254,7 +258,7 @@ cc.Class({
         }
     },
 
-    
+
     onLoad: function () {
         this.handleBannerAds();
         if (this.version) {
@@ -299,7 +303,7 @@ cc.Class({
         this.showJackpotAmount();
     },
 
-    
+
     onBan: function (data) {
         var param = {
             code: 8888,
