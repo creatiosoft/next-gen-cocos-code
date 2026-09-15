@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "5d8fa9b6-cde1-4f37-ac05-1de022fd214c",
+  "uuid": "d9df35df-a509-4f1a-823b-423b7868dba3",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -14,9 +14,9 @@
   "subMetas": {
     "cash games page": {
       "ver": "1.0.6",
-      "uuid": "c0fcff8e-5088-4d44-953f-25aaf98fe05a",
+      "uuid": "aa08cd4e-a47c-41a9-9678-cc42933456a3",
       "importer": "sprite-frame",
-      "rawTextureUuid": "5d8fa9b6-cde1-4f37-ac05-1de022fd214c",
+      "rawTextureUuid": "d9df35df-a509-4f1a-823b-423b7868dba3",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

@@ -54,6 +54,19 @@ var TXLogin = cc.Class({
             default: null,
             type: cc.Node,
         },
+
+        loginWithPassword: {
+            default: null,
+            type: cc.Node,
+        },
+        loginWithOTP: {
+            default: null,
+            type: cc.Node,
+        },
+        loginOption: {
+            default: null,
+            type: cc.ToggleContainer,
+        },
     },
 
     onLoad: function() {
@@ -361,4 +374,13 @@ var TXLogin = cc.Class({
         this.doKYCRetry(this.playerId);
     },
 
+    selectLoginOption: function() {
+        if (this.loginOption.node.children[0].getComponent(cc.Toggle).isChecked) {
+            this.loginWithPassword.active = true;
+            this.loginWithOTP.active = false;
+        } else {
+            this.loginWithPassword.active = false;
+            this.loginWithOTP.active = true;
+        }
+    },
 });
