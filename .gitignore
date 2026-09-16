@@ -8,6 +8,7 @@ local/
 jsb-binary/
 jsb-link/
 web-desktop/
+native-backups/
 native/web-mobile/
 runtime/
 build/web-mobile

@@ -1401,8 +1401,13 @@ cc.Class({
             return;
         }
 
+        if (!window.socketIO || !window.socketIO.socket) {
+            cc.warn('[ServerCom] socketIOBroadcast: socket not ready for', address);
+            return;
+        }
+
         console.log("%c[B/ON] %s", 'color: green;', address);
-        socketIO.socket.on(address, function(data) {
+        window.socketIO.socket.on(address, function(data) {
             if (address != "Tournament:Refresh") {
                 console.log("%c[B/REV] %s\n%o", 'color: blue;', address, data);
             }
