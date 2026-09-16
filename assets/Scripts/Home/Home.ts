@@ -1,4 +1,4 @@
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Home extends cc.Component {
@@ -11,18 +11,18 @@ export default class Home extends cc.Component {
 
     // onLoad () {}
 
-    start () {
+    start() {
 
-        this.playerName.string = GameManager.user.userName;
-        this.playerAvatar.spriteFrame = GameManager.user.urlImg;
-        this.playerId.string = "ID: " + GameManager.user.playerId;
+        // this.playerName.string = GameManager.user.userName;
+        // this.playerAvatar.spriteFrame = GameManager.user.urlImg;
+        // this.playerId.string = "ID: " + GameManager.user.playerId;
     }
 
-    onClickCashGame(){
+    onClickCashGame() {
         this.node.active = false;
     }
 
-    onClickShowHome(){
+    onClickShowHome() {
         this.node.active = true;
     }
 

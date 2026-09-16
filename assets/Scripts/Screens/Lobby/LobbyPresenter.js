@@ -337,7 +337,7 @@ cc.Class({
     refreshDetails: function () {
         this.playerName.string = GameManager.user.userName;
         this.playerImg.spriteFrame = GameManager.user.urlImg;
-        this.playerId.string = "ID: " + GameManager.user.playerId;
+        this.playerId.string = + GameManager.user.playerId;
     },
 
     _setVariationTabButtons: function (activeIndex) {
