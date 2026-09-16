@@ -29,6 +29,10 @@ export default class bannerAds_Page extends cc.Component {
                 cc.error("banner load failed:", err);
                 return;
             }
+            if (!cc.isValid(sprite) || !cc.isValid(sprite.node)) {
+                // Page/sprite was destroyed while the image was still loading — nothing to update.
+                return;
+            }
 
             // console.log("[BannerPage] banner load success:", url);
             let spriteFrame = new cc.SpriteFrame(tex);

@@ -48,7 +48,7 @@
   "nativeMd5Cache": false,
   "android": {
     "REMOTE_SERVER_ROOT": "",
-    "packageName": "com.game.txpoker"
+    "packageName": "com.game.nextz"
   },
   "ios": {
     "REMOTE_SERVER_ROOT": "",

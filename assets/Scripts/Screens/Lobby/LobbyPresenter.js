@@ -128,6 +128,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        noBannerNode: {
+            default: null,
+            type: cc.Node
+        },
 
         gamePreferencesPopup: {
             default: null,
@@ -280,7 +284,7 @@ cc.Class({
         ServerCom.pomeloBroadcast("playerLogout", this.updatePlayerProfileLogout.bind(this));
         this.onShowAll(true);
         ServerCom.pomeloBroadcast("banPLayer", this.onBan.bind(this));
-        ServerCom.socketIOBroadcast(GameManager.user.playerId, this.onPlayerEvent.bind(this));
+        ServerCom.socketIOBroadcast(GameManager?.user?.playerId, this.onPlayerEvent.bind(this));
 
         if (GameManager.isP) {
             this.privNFav.forEach((elem) => {
@@ -445,7 +449,7 @@ cc.Class({
         ServerCom.pomeloRequest("connector.entryHandler.getLobbyRooms", {
             isRealMoney: false,
             channelVariation: "All",
-            playerId: GameManager.user.playerId,
+            playerId: GameManager?.user?.playerId,
             isLoggedIn: true,
             access_token: K.Token.access_token
         }, function (response) {
@@ -790,12 +794,14 @@ cc.Class({
 
     handleBannerAds() {
         this.bannerAdsNode.active = false;
+        this.noBannerNode.active = true;
         this.scheduleOnce(() => {
             ServerCom.httpGetRequest(K.ServerAddress.otp_server + "/api/promotional-banners",
                 null,
                 (response) => {
                     console.log("bannerData", response);
                     this.bannerAdsNode.active = true;
+                    this.noBannerNode.active = false;
                     this.scheduleOnce(() => {
                         let handler = this.bannerAdsNode.getComponent(bannerHandler);
                         handler.setData(response.data.promotionalBanners);

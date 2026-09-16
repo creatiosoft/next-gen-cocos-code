@@ -223,32 +223,35 @@ var CashTablePresenter = cc.Class({
                     break;
                 }
             }
+            if (!room) {
+                return;
+            }
             this.roomBlindsValue.string = room.smallBlind + "/" + room.bigBlind;
 
             if (room.channelVariation == 'Texas Hold’em') {
                 this.roomTag.string = "NLH";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];                
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[0];
             } else if (room.channelVariation == 'Omaha') {
                 this.roomTag.string = "PLO";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];
             } else if (room.channelVariation == 'Omaha 5') {
                 this.roomTag.string = "PLO5";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];
             } else if (room.channelVariation == 'Omaha 6') {
                 this.roomTag.string = "PLO6";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];
             } else if (room.channelVariation == 'Mega Hold’em') {
                 this.roomTag.string = "MEGA";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[0];
             } else if (room.channelVariation == 'Mixed Game') {
                 this.roomTag.string = "MIXED";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[0];
             } else if (room.channelVariation == 'Big O') {
                 this.roomTag.string = "BIG O";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];
             } else {
                 this.roomTag.string = "NLH";
-                this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[0];
             }
             this.room.string = this.roomTag.string;
         }

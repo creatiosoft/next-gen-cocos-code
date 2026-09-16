@@ -181,7 +181,7 @@ export class TournamentLobbyListPresenter extends cc.Component {
 		TournamentServerCom.socketIOBroadcast(K.SocketIOBroadcast.Lobby.TournamentLobbyResponseEvent, this.onTournamentLobbyResponseEvent.bind(this));
 		TournamentServerCom.socketIOBroadcast("joinNewTable", this.onJoinNewTable.bind(this));
 		TournamentServerCom.socketIOBroadcast("realChipsUpdate", this.onRealChipsUpdate.bind(this));
-		(ServerCom as any).socketIOBroadcast("turnBroadcast:" + GameManager.user.playerId, this.onTournamentTurnBroadcast.bind(this));
+		(ServerCom as any).socketIOBroadcast("turnBroadcast:" + GameManager?.user?.playerId, this.onTournamentTurnBroadcast.bind(this));
 		//
 		cc.systemEvent.on("tournamentGameStart", this.onTournamentGameStart, this);
 		cc.systemEvent.on(K.SocketIOEvent.Lobby.TournamentSelect, this.onTournamentSelect, this);
@@ -334,7 +334,7 @@ export class TournamentLobbyListPresenter extends cc.Component {
 		// console.log("onTournamentItemPicked", tourData);
 		this._pendingTourDataForPopup = true;
 		(window as any).TournamentLobbyHandler.requestTournamentData(
-			{ tournamentId: tourData.id ? tourData.id : tourData._id},
+			{ tournamentId: tourData.id ? tourData.id : tourData._id },
 			() => { },
 			(err: any) => { cc.warn('[onTournamentItemPicked] error', err); this._pendingTourDataForPopup = false; }
 		);
@@ -829,8 +829,8 @@ export class TournamentLobbyListPresenter extends cc.Component {
 			console.log("[TGS-Presenter] enterChannelResponse success:", resData?.success, "tourId:", resData?.tournamentId, "expected:", tournamentId);
 			if (!resData?.success) {
 				if (resData.isMaxTable == true) {
-                    GameManager.popUpManager.show(PopUpType.MaxTablesJoinedPopup, null, function () { }); 
-                }
+					GameManager.popUpManager.show(PopUpType.MaxTablesJoinedPopup, null, function () { });
+				}
 				return;
 			}
 			if (resData.tournamentId && resData.tournamentId !== tournamentId) {
@@ -1019,7 +1019,7 @@ export class TournamentLobbyListPresenter extends cc.Component {
 					maxPlayers: 2,
 				}
 			});
-		}	
+		}
 	}
 
 	createTournamentSitNGoList(data) {
@@ -1136,10 +1136,10 @@ export class TournamentLobbyListPresenter extends cc.Component {
 		// 
 		if (data.eventType == 'TournamentAddonPeriodStart') {
 			GameManager.emit('TournamentAddonPeriodStart', data);
-        }
-        else if (data.eventType == 'TournamentAddonPeriodOver') {
-        	GameManager.emit('TournamentAddonPeriodOver', data);
-        }
+		}
+		else if (data.eventType == 'TournamentAddonPeriodOver') {
+			GameManager.emit('TournamentAddonPeriodOver', data);
+		}
 	},
 
 	onTournamentStartingSoon(data) {
@@ -1402,7 +1402,7 @@ export class TournamentLobbyListPresenter extends cc.Component {
 		if (this.gameTypeDropdown) {
 			this.gameTypeDropdown.node.parent.active = true;
 		}
-		
+
 		this.allTabNode.getChildByName("pressed").active = false;
 		this.allTabNode.getChildByName("Label").color = new cc.Color().fromHEX("#FFFFFF");
 		this.mttTabNode.getChildByName("pressed").active = false;
@@ -1845,7 +1845,7 @@ export class TournamentLobbyListPresenter extends cc.Component {
 	}
 
 	hasAddOnBreakAtLevel(tournamentId, level) {
-        for (let i = 0; i < this.tourList.length; i++) {
+		for (let i = 0; i < this.tourList.length; i++) {
 			if (tournamentId == this.tourList[i].tourItemInfo._id) {
 				let tourData = this.tourList[i].tourItemInfo;
 				const levels: number[] = tourData.addOn ? tourData.addOn.addOnAllowedBlindLevels : [];
@@ -1854,8 +1854,8 @@ export class TournamentLobbyListPresenter extends cc.Component {
 				}
 				break;
 			}
-		}       
-		return false; 
-    }
+		}
+		return false;
+	}
 
 }
