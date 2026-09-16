@@ -122,6 +122,7 @@ var CashRoom = cc.Class({
             default: null,
             type: cc.ToggleContainer
         },
+        selectedToggleFilterIndex: 0,
     },
 
     statics: {
@@ -1215,6 +1216,11 @@ var CashRoom = cc.Class({
 
     showSortByPopup(){       
         this.sortByNode.active = !this.sortByNode.active;
+        if (this.sortByNode.active) {
+            var toggles = this.sortToggleContainer.node.children;
+            toggles[this.selectedToggleFilterIndex].getComponent(cc.Toggle).isChecked = true;
+        }
+       
     },
 
     hideSortByPopup(){       
@@ -1231,7 +1237,11 @@ var CashRoom = cc.Class({
 
         CashRoom.sortBuyinLH = false;
         CashRoom.sortBuyinHL = false;
-
+        for (let a = 0; a < toggles.length; a++) {
+            if (toggles[a].getComponent(cc.Toggle).isChecked) {
+                this.selectedToggleFilterIndex = a;
+            }
+        }
         this.hideSortByPopup();
         this.onDoSort();
     },
