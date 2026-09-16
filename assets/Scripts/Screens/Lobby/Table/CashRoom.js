@@ -129,6 +129,7 @@ var CashRoom = cc.Class({
         prevSelection: null,
         isPriactice: false,
         sortPlayers: true,
+        sortPlayersLH: false,
         sortBuyinLH: false,
         sortBuyinHL: false,
         sortBlindsLH: false,
@@ -222,9 +223,9 @@ var CashRoom = cc.Class({
             cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {//assets/TAGS/plo8
                 if (!err) {
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
-                    ploTag.active = true;
+                    ploTag.active = false;
                     ploTag.children[0].getComponent(cc.Label).string = 8;
-                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO8";
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "Big O";
                 }
             });
         } else {
@@ -536,6 +537,12 @@ var CashRoom = cc.Class({
                 order: 'desc'
             });
         }
+        if (CashRoom.sortPlayersLH) {
+            sortRules.push({
+                key: 'totalPlayer',
+                order: 'asc'
+            });
+        }
         if (CashRoom.sortBlindsLH) {
             sortRules.push({
                 key: 'smallBlind',
@@ -652,9 +659,9 @@ var CashRoom = cc.Class({
                 cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function (err, tex) {//assets/TAGS/plo8
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
-                        ploTag.active = true;
+                        ploTag.active = false;
                         ploTag.children[0].getComponent(cc.Label).string = 8;
-                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO8";
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "BIG O";
                     }
                 });
             } else {
@@ -732,6 +739,12 @@ var CashRoom = cc.Class({
             sortRules.push({
                 key: 'totalPlayer',
                 order: 'desc'
+            });
+        }
+        if (CashRoom.sortPlayersLH) {
+            sortRules.push({
+                key: 'totalPlayer',
+                order: 'asc'
             });
         }
         if (CashRoom.sortBlindsLH) {
@@ -1090,6 +1103,12 @@ var CashRoom = cc.Class({
                 order: 'desc'
             });
         }
+        if (CashRoom.sortPlayersLH) {
+            sortRules.push({
+                key: 'totalPlayer',
+                order: 'asc'
+            });
+        }
         if (CashRoom.sortBlindsLH) {
             sortRules.push({
                 key: 'smallBlind',
@@ -1151,6 +1170,9 @@ var CashRoom = cc.Class({
         if (CashRoom.sortPlayers) {
             sortNum += 1;
         }
+        if (CashRoom.sortPlayersLH) {
+            sortNum += 1;
+        }
         if (CashRoom.sortBlindsLH) {
             sortNum += 1;
         }
@@ -1200,7 +1222,22 @@ var CashRoom = cc.Class({
     },
 
     onClickApplySortFilter() {
-        // CashRoom.sortPlayers = this.sortToggleContainer
-        // this.onDoSort
+        var toggles = this.sortToggleContainer.node.children;
+
+        CashRoom.sortPlayersLH = toggles[0].getComponent(cc.Toggle).isChecked;
+        CashRoom.sortPlayers = toggles[1].getComponent(cc.Toggle).isChecked;
+        CashRoom.sortBlindsLH = toggles[2].getComponent(cc.Toggle).isChecked;
+        CashRoom.sortBlindsHL = toggles[3].getComponent(cc.Toggle).isChecked;
+
+        CashRoom.sortBuyinLH = false;
+        CashRoom.sortBuyinHL = false;
+
+        this.hideSortByPopup();
+        this.onDoSort();
+    },
+
+    onClickClearAllSortFilter() {
+        var toggles = this.sortToggleContainer.node.children;
+        toggles[0].getComponent(cc.Toggle).isChecked = true;
     },
 });

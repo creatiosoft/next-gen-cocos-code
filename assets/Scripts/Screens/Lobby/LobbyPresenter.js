@@ -340,9 +340,10 @@ cc.Class({
         this.playerId.string = + GameManager.user.playerId;
     },
 
-    _setVariationTabButtons: function (activeIndex) {
+    _setVariationTabButtons: function (room) {
+        var activeStates = [room.isShowAll, room.isShowHoldem, room.isShowPLO, room.isShowMixed];
         for (var i = 0; i < this.tabButtons2.length && i < 4; i++) {
-            if (i === activeIndex) {
+            if (activeStates[i]) {
                 this.setActiveButton(this.tabButtons2[i]);
             } else {
                 this.setInActiveButton(this.tabButtons2[i]);
@@ -351,7 +352,9 @@ cc.Class({
     },
 
     /**
-     * ALL / NLH / PLO / MIXED are exclusive. Low/Mid/High stay as-is.
+     * ALL / NLH / PLO / MIXED behave as independent checkboxes, same as Low/Mid/High.
+     * Picking "All" clears the other three; picking any of NLH/PLO/MIXED toggles that
+     * one on/off and clears "All". No filter selected falls back to showing everything.
      * Uses cached CashRoom.roomData when present — no lobby refetch.
      */
     _applyRoomVariation: function (mode, fromMainMenu, cb) {
@@ -359,34 +362,29 @@ cc.Class({
             CashRoom.isPriactice = false;
         }
 
-        var variation = K.Variation.All;
-        if (mode === 'holdem') {
-            variation = K.Variation.TexasHoldem;
-        } else if (mode === 'omaha') {
-            variation = K.Variation.Omaha;
-        } else if (mode === 'mixed') {
-            variation = K.Variation.All;
-        }
-
         if (this.roomTable.active) {
             var room = this.roomTable.getComponent('CashRoom');
-            room.isShowAll = (mode === 'all');
-            room.isShowHoldem = (mode === 'holdem');
-            room.isShowPLO = (mode === 'omaha');
-            room.isShowMixed = (mode === 'mixed');
+
+            if (mode === 'all') {
+                room.isShowAll = true;
+                room.isShowHoldem = false;
+                room.isShowPLO = false;
+                room.isShowMixed = false;
+            } else {
+                if (mode === 'holdem') {
+                    room.isShowHoldem = !room.isShowHoldem;
+                } else if (mode === 'omaha') {
+                    room.isShowPLO = !room.isShowPLO;
+                } else if (mode === 'mixed') {
+                    room.isShowMixed = !room.isShowMixed;
+                }
+                room.isShowAll = !room.isShowHoldem && !room.isShowPLO && !room.isShowMixed;
+            }
             room.isShowMega = false;
             room.isShowAllIn = false;
             room.isShowFast = false;
 
-            var tabIndex = 0;
-            if (mode === 'holdem') {
-                tabIndex = 1;
-            } else if (mode === 'omaha') {
-                tabIndex = 2;
-            } else if (mode === 'mixed') {
-                tabIndex = 3;
-            }
-            this._setVariationTabButtons(tabIndex);
+            this._setVariationTabButtons(room);
 
             if (room.roomData && room.roomData.length) {
                 room._refreshFromCache();
@@ -408,6 +406,12 @@ cc.Class({
                 });
             }
         } else {
+            var variation = K.Variation.All;
+            if (mode === 'holdem') {
+                variation = K.Variation.TexasHoldem;
+            } else if (mode === 'omaha') {
+                variation = K.Variation.Omaha;
+            }
             this.tables.forEach(function (element) {
                 element.variation = variation;
             }, this);

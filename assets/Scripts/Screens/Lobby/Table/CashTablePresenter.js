@@ -244,7 +244,7 @@ var CashTablePresenter = cc.Class({
                 this.roomTag.string = "MIXED";
                 this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[0];
             } else if (room.channelVariation == 'Big O') {
-                this.roomTag.string = "PLO8";
+                this.roomTag.string = "BIG O";
                 this.roomTagIcon.SpriteFrame = this.roomTagIconsSpriteFrame[1];
             } else {
                 this.roomTag.string = "NLH";
