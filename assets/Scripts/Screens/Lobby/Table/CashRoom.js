@@ -122,6 +122,11 @@ var CashRoom = cc.Class({
             default: null,
             type: cc.ToggleContainer
         },
+
+        defaultAllFilterNode: {
+            default: null,
+            type: cc.Node
+        },
         selectedToggleFilterIndex: 0,
     },
 
@@ -218,6 +223,7 @@ var CashRoom = cc.Class({
             cc.loader.loadRes('assets/TAGS/mixed', cc.SpriteFrame, function(err, tex) {
                 if (!err) {
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "NLH+PLO";
                 }
             });
         } else if (data.channelVariation == 'Big O') {
@@ -654,6 +660,7 @@ var CashRoom = cc.Class({
                 cc.loader.loadRes('assets/TAGS/mixed', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "NLH+PLO";
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Big O') {
@@ -1212,6 +1219,7 @@ var CashRoom = cc.Class({
         }
         this.filterCountLabel.node.parent.active = count > 0;
         this.filterCountLabel.string = count + "";
+        this.defaultAllFilterNode.active = count <= 0;
     },
 
     showSortByPopup(){       

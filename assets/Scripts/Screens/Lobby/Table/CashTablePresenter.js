@@ -244,8 +244,8 @@ var CashTablePresenter = cc.Class({
                 this.roomTag.string = "MEGA";
                 this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[0];
             } else if (room.channelVariation == 'Mixed Game') {
-                this.roomTag.string = "MIXED";
-                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[0];
+                this.roomTag.string = "NLH+PLO";
+                this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[2];
             } else if (room.channelVariation == 'Big O') {
                 this.roomTag.string = "BIG O";
                 this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];

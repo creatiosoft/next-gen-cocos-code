@@ -54,6 +54,10 @@ cc.Class({
             default: null,
             type: cc.Sprite
         },
+        selectedAvatarPreview: {
+            default: null,
+            type: cc.Sprite
+        },
         avatarScrollViewRef: {
             default: null,
             type: cc.Node,
@@ -71,6 +75,22 @@ cc.Class({
             type: AvatarSelection,
         },
         selectedAvatarID: 0,
+        profileAvatar: {
+            default: null,
+            type: cc.Sprite
+        },
+        profileNode: {
+            default: null,
+            type: cc.Node,
+        },
+        profileName: {
+            default: null,
+            type: cc.Label,
+        },
+        userEmail: {
+            default: null,
+            type: cc.Label,
+        },
     },
 
     /**
@@ -103,6 +123,7 @@ cc.Class({
         this.balance.string = GameManager.convertChips(this.balance.string);
         this.playerName.string = GameManager.user.userName;
         this.playerId.string = "Player ID: " + GameManager.user.playerId;
+        this.profileName.string = GameManager.user.userName;
 
         if (!GameManager.isMobile) {
             this.playerId.string = GameManager.user.playerId;
@@ -118,6 +139,12 @@ cc.Class({
             this.selectedAvatarID = imageIndex;
             this.avatars[imageIndex].selection.active = true;
         }
+        if (this.selectedAvatarPreview) {
+            this.selectedAvatarPreview.spriteFrame = GameManager.user.urlImg;
+        }
+
+            this.profileAvatar.spriteFrame = GameManager.user.urlImg;
+            this.userEmail.string = GameManager.user.emailId;
     },
 
     onSelectAvatar: function (avatarId) {
@@ -128,6 +155,9 @@ cc.Class({
 
         this.avatars[avatarId].showSelection();
         this.selectedAvatarID = avatarId;
+        if (this.selectedAvatarPreview) {
+            this.selectedAvatarPreview.spriteFrame = GameManager.avatarImages[avatarId];
+        }
     },
 
     /**
@@ -258,6 +288,8 @@ cc.Class({
                 if (this.noDataNode) {
                     this.noDataNode.active = true;
                 }
+                this.profileAvatar.spriteFrame = GameManager.user.urlImg;
+                this.profileName.string = GameManager.user.userName;
             }
         }.bind(this), null, 5000, false, false);
     },
@@ -275,6 +307,9 @@ cc.Class({
             this.selectedAvatarID = imageIndex;
             this.avatars[imageIndex].selection.active = true;
         }
+        if (this.selectedAvatarPreview) {
+            this.selectedAvatarPreview.spriteFrame = GameManager.user.urlImg;
+        }
         // console.log("[Avatar] onAvatars open: selectedAvatarID (1-indexed)=", this.selectedAvatarID);
         if (this.noDataNode) {
             this.noDataNode.active = false;
@@ -290,6 +325,8 @@ cc.Class({
         if (!GameManager.isMobile) {
             this.editProfileTab.active = false;
         }
+        this.profileAvatar.spriteFrame = GameManager.user.urlImg;
+        this.profileName.string = GameManager.user.userName;
     },
 
     onAvatarsSubmit: function () {
@@ -343,5 +380,15 @@ cc.Class({
             // Web browser
             window.open("https://txpokeronline.com/terms.html", "_blank");
         }
+    },
+
+    showProfile(){
+        this.profileNode.active = true;
+        this.profileAvatar.spriteFrame = GameManager.user.urlImg;
+        this.profileName.string = GameManager.user.userName;
+    },
+
+    hideProfile(){
+        this.profileNode.active = false;
     },
 });
