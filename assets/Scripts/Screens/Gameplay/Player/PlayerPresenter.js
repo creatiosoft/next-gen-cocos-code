@@ -303,6 +303,7 @@ var PlayerPresenter = cc.Class({
     onLoad: function () {
 
         this.longPressDetection.normalCallback = this.normalCallback.bind(this);
+        this.avatarBtn.node.on(cc.Node.EventType.TOUCH_END, this.onAvatarClicked, this);
 
         this.imageLoadedRef = this.imageLoaded.bind(this);
         GameManager.on("image-loaded", this.imageLoadedRef);
@@ -427,14 +428,13 @@ var PlayerPresenter = cc.Class({
         }
         var self = (selfPlayerId === this.playerData.playerId);
 
+        this.avatarBtn.interactable = true;
         if (self) {
-            this.avatarBtn.interactable = false;
             this.updateTimeBank2(this.playerData.timeBankSec);
 
             this.cardHolderMyShow.active = true;
         } else {
             this.cardHolderMyShow.active = false;
-            this.avatarBtn.interactable = true;
         }
         this.setSelfPlayerView(self, revealForSelfAtStartGame);
 
@@ -1559,6 +1559,23 @@ var PlayerPresenter = cc.Class({
 
     isSelf() {
         return (this.playerData && this.playerData.playerId && this.playerData.playerId == GameManager.user.playerId);
+    },
+
+    onAvatarClicked() {
+        if (!this.playerData) {
+            return;
+        }
+        var isSelf = this.isSelf();
+        var avatarSpriteFrame = isSelf ? GameManager.user.urlImg : GameManager.avatarImages[this.playerData.imageAvtar];
+        var bigBlind = this.pokerPresenter.model.roomConfig.bigBlind;
+        GameManager.popUpManager.showIn(PopUpType.GameplayPlayerProfile, {
+            playerId: this.playerData.playerId,
+            playerName: this.playerData.playerName,
+            chips: this.playerData.chips,
+            chipsInBB: (Number(this.playerData.chips) / bigBlind).toFixed(1),
+            avatarSpriteFrame: avatarSpriteFrame,
+            isSelf: isSelf,
+        }, null, this.pokerPresenter.node);
     },
 
     onSitHere: function () {

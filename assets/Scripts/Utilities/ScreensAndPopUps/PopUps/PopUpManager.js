@@ -67,6 +67,7 @@ var PopUpType = cc.Enum({
     NewVersionPopup: -1,
     NotificationPopup: -1,
     NewLaunch: -1,
+    GameplayPlayerProfile: -1,
 
     None: -1,
 });
@@ -247,6 +248,9 @@ var PopUpManager = cc.Class({
             },
             [PopUpType.ChatInfoPanel]: {
                 prefab: 'prefabs/PopUps/gameplay/ChatInfoPanel'
+            },
+            [PopUpType.GameplayPlayerProfile]: {
+                prefab: 'prefabs/nextGen/gameplayPlayerProfile'
             },
 
             // tournament
