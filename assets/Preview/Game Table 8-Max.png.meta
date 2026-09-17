@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "eba35648-3500-4e7d-9ee5-f4b9b8d31974",
+  "uuid": "5cbf79f7-1080-4591-ae09-45bee4e33407",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -8,15 +8,15 @@
   "premultiplyAlpha": false,
   "genMipmaps": false,
   "packable": true,
-  "width": 176,
-  "height": 72,
+  "width": 720,
+  "height": 1480,
   "platformSettings": {},
   "subMetas": {
-    "Rectangle 363151": {
+    "Game Table 8-Max": {
       "ver": "1.0.6",
-      "uuid": "faecabf4-74b9-40ef-8ab6-23eb12bb251f",
+      "uuid": "03dc5492-02e3-4d1e-aabb-77b6802a069e",
       "importer": "sprite-frame",
-      "rawTextureUuid": "eba35648-3500-4e7d-9ee5-f4b9b8d31974",
+      "rawTextureUuid": "5cbf79f7-1080-4591-ae09-45bee4e33407",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -24,14 +24,14 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 148,
-      "height": 52,
-      "rawWidth": 148,
-      "rawHeight": 52,
+      "width": 720,
+      "height": 1480,
+      "rawWidth": 720,
+      "rawHeight": 1480,
       "borderTop": 0,
       "borderBottom": 0,
-      "borderLeft": 28,
-      "borderRight": 30,
+      "borderLeft": 0,
+      "borderRight": 0,
       "subMetas": {}
     }
   }

@@ -159,6 +159,18 @@ var PlayerPresenter = cc.Class({
             default: null,
             type: cc.Sprite,
         },
+        turnTimerLabel: {
+            default: null,
+            type: cc.Label,
+        },
+        turnTimerStar: {
+            default: null,
+            type: cc.Node,
+        },
+        turmTimerGray: {
+            default: null,
+            type: cc.Node,
+        },
 
         baseSprite: {
             default: null,
@@ -544,6 +556,15 @@ var PlayerPresenter = cc.Class({
         this.timerSprite.fillRange = 0;
         this.timerPSprite.fillRange = 0;
         this.timerPSprite.node.children[0].active = false;
+        if (this.turnTimerLabel) {
+            this.turnTimerLabel.string = "";
+        }
+        if (this.turnTimerStar) {
+            this.turnTimerStar.active = false;
+        }
+        if (this.turmTimerGray) {
+            this.turmTimerGray.active = false;
+        }
         this.timeBank.active = false;
         this.extra.active = false;
         if (this.isSelf() && this.playerData.state != K.PlayerState.Waiting) {
@@ -1075,6 +1096,9 @@ var PlayerPresenter = cc.Class({
         this.pokerPresenter.model.off(K.PokerEvents.onTimerTick);
         this.pokerPresenter.model.off(K.PokerEvents.onDisconnectTimerTick);
         this.imgHider.active = true;
+        if (this.turmTimerGray) {
+            this.turmTimerGray.active = true;
+        }
         if (this.playerData && this.playerData.state === K.PlayerState.Disconnected) {
             return;
         }
@@ -1095,22 +1119,34 @@ var PlayerPresenter = cc.Class({
                     this.timeBank.children[1].getComponent(cc.Label).string = "0" + this.timeBank.children[1].getComponent(cc.Label).string;
                 }
             }
-            this.timerSprite.fillRange = time;
-            this.timerSprite.node.color = new cc.Color().fromHEX("#00FF1D");
-            this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#00FF1D");
-            if (this.timerSprite.fillRange >= 0.5) {
-                this.timerSprite.node.color = new cc.Color().fromHEX("#00FF1D");
-                this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#00FF1D");
-            } else if (this.timerSprite.fillRange >= 0.25) {
-                this.timerSprite.node.color = new cc.Color().fromHEX("#FFFF00");
-                this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#FFFF00");
-            } else if (this.timerSprite.fillRange >= 0.125) {
-                this.timerSprite.node.color = new cc.Color().fromHEX("#FF9D00");
-                this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#FF9D00");
-            } else {
-                this.timerSprite.node.color = new cc.Color().fromHEX("#FF0000");
-                this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#FF0000");
+            if (this.turnTimerLabel) {
+                let remainingSeconds = Math.max(0, Math.ceil(elapsed));
+                this.turnTimerLabel.string = remainingSeconds < 10 ? "0" + remainingSeconds : "" + remainingSeconds;
             }
+            if (this.turnTimerStar) {
+                this.turnTimerStar.active = time > 0;
+                let radius = this.turnTimerStar.parent.width / 2;
+                let angleDegrees = (time + 0.25) * 360;
+                let angleRadians = angleDegrees * Math.PI / 180;
+                this.turnTimerStar.x = radius * Math.cos(angleRadians);
+                this.turnTimerStar.y = radius * Math.sin(angleRadians);
+            }
+            this.timerSprite.fillRange = time;
+            // this.timerSprite.node.color = new cc.Color().fromHEX("#00FF1D");
+            // this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#00FF1D");
+            // if (this.timerSprite.fillRange >= 0.5) {
+            //     this.timerSprite.node.color = new cc.Color().fromHEX("#00FF1D");
+            //     this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#00FF1D");
+            // } else if (this.timerSprite.fillRange >= 0.25) {
+            //     this.timerSprite.node.color = new cc.Color().fromHEX("#FFFF00");
+            //     this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#FFFF00");
+            // } else if (this.timerSprite.fillRange >= 0.125) {
+            //     this.timerSprite.node.color = new cc.Color().fromHEX("#FF9D00");
+            //     this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#FF9D00");
+            // } else {
+            //     this.timerSprite.node.color = new cc.Color().fromHEX("#FF0000");
+            //     this.timerPSprite.node.children[0].color = new cc.Color().fromHEX("#FF0000");
+            // }
             this.timerPSprite.node.children[0].active = true;
             this.timerPSprite.fillRange = time;
 
@@ -2828,9 +2864,7 @@ var PlayerPresenter = cc.Class({
         let info = bg.getChildByName("info");
 
         if (board2BestHand != "") {
-            info.getComponent(cc.Label).string = extractMiddle(bestHand) + "\n" + extractMiddle(board2BestHand);
-            bg.height = 111;
-            info.y = 17.218;
+            info.getComponent(cc.Label).string = extractMiddle(bestHand) + "," + extractMiddle(board2BestHand);
         } else {
             info.getComponent(cc.Label).string = extractMiddle(bestHand);
             bg.height = 80;

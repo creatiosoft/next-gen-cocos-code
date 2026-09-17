@@ -69,7 +69,7 @@ cc.Class({
      * @method onLoad
      * @memberof Controllers.Gameplay.TableTab#
      */
-    onLoad: function() {
+    onLoad: function () {
         this.tableColorChange = this.setTableColor.bind(this);
         this.playerCardsChange = this.showCards2.bind(this);
         this.gameOverChange = this.removeCards.bind(this);
@@ -78,17 +78,17 @@ cc.Class({
         GameManager.on("SQUEEZE_CARDS_OFF", this.showMyCards.bind(this));
     },
 
-    showMyCards: function() {
+    showMyCards: function () {
         this.showCards();
     },
 
-    showCards2: function() {
-        this.scheduleOnce(function() {
+    showCards2: function () {
+        this.scheduleOnce(function () {
             this.showCards();
         }, 3);
     },
 
-    hideMyCards: function() {
+    hideMyCards: function () {
         this.showCards();
     },
 
@@ -97,7 +97,7 @@ cc.Class({
      * @method onClick
      * @memberof Controllers.Gameplay.TableTab#
      */
-    onClick: function() {
+    onClick: function () {
         GameManager.playSound(K.Sounds.click);
         //console.log("Clicked " + this.tabId);
         this.emit(K.PokerEvents.onTableTabSelected, this.tabId);
@@ -109,9 +109,9 @@ cc.Class({
      * @param {Object} data - Object holding the data of table that is to be displayed
      * @memberof Controllers.Gameplay.TableTab#
      */
-    setActiveView: function(data, bigBlind, smallBlind) {
+    setActiveView: function (data, bigBlind, smallBlind) {
         // console.log("TABLE TAB DATA ", data);
-        this.scheduleOnce(function() {
+        this.scheduleOnce(function () {
             // this.activeTableNameLbl.string = data + ", \n" + smallBlind + "/" + bigBlind;
             this.activeView.active = true;
             this.deactiveView.active = false;
@@ -126,9 +126,9 @@ cc.Class({
      * @param {Object} data
      * @memberof Controllers.Gameplay.TableTab#
      */
-    setDeactiveView: function(data, bigBlind, smallBlind) {
+    setDeactiveView: function (data, bigBlind, smallBlind) {
         // console.log("TABLE TAB DATA ", data);
-        this.scheduleOnce(function() {
+        this.scheduleOnce(function () {
             // this.deactiveTableNameLbl.string = data + ", \n" + smallBlind + "/" + bigBlind;
             this.activeView.active = false;
             this.deactiveView.active = true;
@@ -143,7 +143,7 @@ cc.Class({
      * @param {Object} model - Holds the model that is to be displayed. active or deactive model 
      * @memberof Controllers.Gameplay.TableTab#
      */
-    setModel: function(model) {
+    setModel: function (model) {
         this.model = model;
         if (!model) return;
         // if (GameScreen.isMobile) {
@@ -166,8 +166,8 @@ cc.Class({
      * @param {Object} cards 
      * @memberof Controllers.Gameplay.TableTab#
      */
-    showCards: function(cards) {
-        this.node.getChildByName("vari").string = "";
+    showCards: function (cards) {
+        this.node.getChildByName("vari").getComponent(cc.Label).string = this.model.gameData.roomConfig.channelVariation;
         if (this.model && this.model.myCards) {
             GameManager.removeAllChildren(this.cardParent);
             let cardArray = this.model.myCards;
@@ -187,15 +187,17 @@ cc.Class({
                 if (this.model && this.model.gameData) {
                     this.node.getChildByName("vari").getComponent(cc.Label).string = this.model.gameData.roomConfig.channelVariation;
                 } else {
-                    this.node.getChildByName("vari").getComponent(cc.Label).string = "";
+                    this.node.getChildByName("vari").getComponent(cc.Label).string = this.model.gameData.roomConfig.channelVariation;
+                    // this.node.getChildByName("vari").getComponent(cc.Label).string = "";
                 }
             } else {
-                this.node.getChildByName("vari").getComponent(cc.Label).string = "";
+                this.node.getChildByName("vari").getComponent(cc.Label).string = this.model.gameData.roomConfig.channelVariation;
             }
         } else {
             if (this.model && this.model.gameData) {
                 this.node.getChildByName("vari").getComponent(cc.Label).string = this.model.gameData.roomConfig.channelVariation;
             } else {
+                //  this.node.getChildByName("vari").getComponent(cc.Label).string = this.model.gameData.roomConfig.channelVariation;
                 this.node.getChildByName("vari").getComponent(cc.Label).string = "";
             }
         }
@@ -206,7 +208,7 @@ cc.Class({
      * @method removeCards
      * @memberof Controllers.Gameplay.TableTab#
      */
-    removeCards: function(data) {
+    removeCards: function (data) {
         GameManager.removeAllChildren(this.cardParent);
 
         if (this.model && this.model.gameData) {
@@ -216,7 +218,7 @@ cc.Class({
         }
     },
 
-    playAudio: function(sound) {
+    playAudio: function (sound) {
         if (!GameManager.user.settings.muteGameSound) {
 
             GameManager.playSound(sound);
@@ -231,7 +233,7 @@ cc.Class({
      * @param {boolean} val - boolean value to show alert!
      * @memberof Controllers.Gameplay.TableTab#
      */
-    showAlert: function(val) {
+    showAlert: function (val) {
 
         if (this.turnAlert)
             this.turnAlert.active = val;
@@ -250,7 +252,7 @@ cc.Class({
      * @method setTableColor 
      * @memberof Controllers.Gameplay.TableTab#
      */
-    setTableColor: function() {
+    setTableColor: function () {
         if (!!this.model && !!this.model.gameData) {
             var col = this.model.gameData.settings.tableColor + "";
             if (col !== undefined || col !== null) {
