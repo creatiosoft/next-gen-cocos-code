@@ -74,6 +74,15 @@ cc.Class({
             default: [],
             type: AvatarSelection,
         },
+        changeAvatarBtn: {
+            default: null,
+            type: cc.Button,
+        },
+
+        changeAvatarBtnBg: {
+            default: null,
+            type: cc.Sprite,
+        },
         selectedAvatarID: 0,
         profileAvatar: {
             default: null,
@@ -116,7 +125,7 @@ cc.Class({
 
     onEnable: function () {
 
-        this.version.string = "Version: v" + K.ServerAddress.clientVer;
+        this.version.string = "App Version " + K.ServerAddress.clientVer;
         this.playerImg.spriteFrame = GameManager.user.urlImg;
 
         this.balance.string = Number((GameManager.user.category == "GOLD" ? GameManager.user.freeChips : GameManager.user.realChips).toFixed(2));
@@ -158,6 +167,22 @@ cc.Class({
         if (this.selectedAvatarPreview) {
             this.selectedAvatarPreview.spriteFrame = GameManager.avatarImages[avatarId];
         }
+        this.updateChangeAvatarBtnState();
+    },
+
+    /**
+     * @description Enables changeAvatarBtn only when the selected avatar differs from the player's current avatar.
+     * @method updateChangeAvatarBtnState
+     * @memberof Popups.GamePreferencesPopup#
+     */
+    updateChangeAvatarBtnState: function () {
+        if (!this.changeAvatarBtn) {
+            return;
+        }
+        var currentAvatarID = parseInt(GameManager.user.profileImage);
+        this.changeAvatarBtn.interactable = this.selectedAvatarID >= 0 && this.selectedAvatarID !== currentAvatarID;
+        this.changeAvatarBtnBg.setMaterial(0, this.selectedAvatarID >= 0 && this.selectedAvatarID !== currentAvatarID ?
+            cc.Material.getBuiltinMaterial("2d-sprite") : cc.Material.getBuiltinMaterial("2d-gray-sprite"));
     },
 
     /**
@@ -290,6 +315,7 @@ cc.Class({
                 }
                 this.profileAvatar.spriteFrame = GameManager.user.urlImg;
                 this.profileName.string = GameManager.user.userName;
+                this.updateChangeAvatarBtnState();
             }
         }.bind(this), null, 5000, false, false);
     },
@@ -314,6 +340,7 @@ cc.Class({
         if (this.noDataNode) {
             this.noDataNode.active = false;
         }
+        this.updateChangeAvatarBtnState();
     },
 
     onAvatarsBack: function () {
