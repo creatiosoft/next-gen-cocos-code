@@ -334,7 +334,7 @@ cc.Class({
 
         var info;
         if (data.maxValue <= 0) {
-            info = "";
+            info = data.isAddChips ? "You already have the maximum allowed chips" : "You don’t have enough chips";
         } else if (data.maxValue < data.minValue) {
             // maxValue > 0 but less than minimum (1) — player is near max chips, not an insufficient balance issue
             info = "Minimum top-up amount is " + data.minValue;
@@ -519,6 +519,7 @@ cc.Class({
         amount = amount > this.maxAmount ? this.maxAmount : amount;
         this.editBox.string = isNaN(amount.toString()) ? "0" : amount.toString();
         this.confirmBtn.interactable = true;
+        this.msgLbl.string = "";
     },
 
     onAutoBuySelected: function() {
@@ -538,11 +539,15 @@ cc.Class({
     onMin: function() {
         this.sliderTouch.setSliderValue(0);
         this.editBox.string = this.minAmount.toString();
+        this.msgLbl.string = "";
+        this.confirmBtn.interactable = true;
     },
 
     onMax: function() {
         this.sliderTouch.setSliderValue(1);
         this.editBox.string = this.maxAmount.toString();
+        this.msgLbl.string = "";
+        this.confirmBtn.interactable = true;
     },
 
     onIncrementSlider: function() {

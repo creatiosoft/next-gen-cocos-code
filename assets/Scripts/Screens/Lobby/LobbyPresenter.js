@@ -493,7 +493,7 @@ cc.Class({
     setBombpotGamesView: function (fromMainMenu = false, cb = null) {
         this.onShowAll();
         this._applyRoomVariation('bombpot', fromMainMenu, cb);
-        this.tabButtons2[this.tabButtons2.length-1].node.active = false;
+        this.tabButtons2[this.tabButtons2.length - 1].node.active = false;
         this.roomTable.getComponent('CashRoom').clearAllFilter();
         this.roomTable.getComponent('CashRoom').getFilterCount();
     },
@@ -822,22 +822,39 @@ cc.Class({
     handleBannerAds() {
         this.bannerAdsNode.active = false;
         this.noBannerNode.active = true;
-        this.scheduleOnce(() => {
-            ServerCom.httpGetRequest(K.ServerAddress.otp_server + "/api/promotional-banners",
-                null,
-                (response) => {
-                    console.log("bannerData", response);
-                    this.bannerAdsNode.active = true;
-                    this.noBannerNode.active = false;
-                    this.scheduleOnce(() => {
-                        let handler = this.bannerAdsNode.getComponent(bannerHandler);
-                        handler.setData(response.data.promotionalBanners);
-                    }, 0);
-                },
-                (error) => {
-                    console.log("bannerData", error);
+        if (!K.Token.access_token) {
+            console.warn("[Banner] access_token not set yet, waiting for loginSuccess event before fetching promotional-banners");
+            GameManager.once("loginSuccess", () => {
+                this.handleBannerAds();
+            });
+            return;
+        }
+        ServerCom.httpGetRequest(K.ServerAddress.otp_server + "/api/promotional-banners",
+            null,
+            (response) => {
+                console.log("[Banner] promotional-banners response:", response);
+                let banners = response && response.data && response.data.promotionalBanners;
+                if (!banners || !banners.length) {
+                    console.warn("[Banner] promotional-banners response had no banners, leaving noBannerNode shown");
+                    return;
                 }
-            );
-        }, 0);
+                this.bannerAdsNode.active = true;
+                this.noBannerNode.active = false;
+                let handler = this.bannerAdsNode.getComponent(bannerHandler);
+                handler.setData(banners);
+            },
+            (error) => {
+                console.warn("[Banner] promotional-banners request FAILED:", error);
+                this.scheduleOnce(() => {
+                    this.handleBannerAds();
+                }, 1.5);
+            }
+        );
+    },
+    allInGameBtnClick() {
+        // this.comingSoon.active = true;
+        // this.scheduleOnce(() => {
+        //     this.comingSoon.active = false;
+        // }, 2);
     }
 });

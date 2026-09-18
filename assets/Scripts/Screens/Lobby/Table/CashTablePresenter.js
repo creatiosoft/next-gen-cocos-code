@@ -338,9 +338,6 @@ var CashTablePresenter = cc.Class({
         if (this.variation == K.Variation.OpenFaceChinesePoker) {
             var content = [data.channelName, data.chipsPointRatio, data.channelVariation, GameManager.getGameTypeByValue(data.turnTime), data.minBuyIn, data.maxBuyIn, data.playingPlayers + "/" + data.maxPlayers, data.queuePlayers];
         } else {
-            if (data && data.avgPot) {
-                data.avgStack = data.avgPot;
-            }
             var content = [
                 data.channelName,
                 GameManager.convertChips(data.smallBlind) + "/" + GameManager.convertChips(data.bigBlind),

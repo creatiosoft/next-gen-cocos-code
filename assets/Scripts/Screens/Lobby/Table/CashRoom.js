@@ -996,9 +996,6 @@ var CashRoom = cc.Class({
         if (this.variation == K.Variation.OpenFaceChinesePoker) {
             var content = [data.channelName, data.chipsPointRatio, data.channelVariation, GameManager.getGameTypeByValue(data.turnTime), data.minBuyIn, data.maxBuyIn, data.playingPlayers + "/" + data.maxPlayers, data.queuePlayers];
         } else {
-            if (data && data.avgPot) {
-                data.avgStack = data.avgPot;
-            }
             let variation = data.channelVariation;
             switch (data.channelVariation) {
                 case K.Variation.TexasHoldem:

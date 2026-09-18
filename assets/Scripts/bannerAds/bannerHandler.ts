@@ -21,6 +21,7 @@ export default class bannerHandler extends cc.Component {
     private _isInitialized: boolean = false;
     private _isWrapping: boolean = false;
     private _touchStartX: number = 0;
+    private _pendingData: any = null;
 
     start() { }
 
@@ -31,6 +32,7 @@ export default class bannerHandler extends cc.Component {
 
     setData(data) {
         // console.log("[Banner] setData called, data.length:", data?.length);
+        this._pendingData = data;
         if (!this.pageView) {
             // console.warn("[Banner] setData aborted: pageView is not assigned");
             return;
@@ -201,35 +203,16 @@ export default class bannerHandler extends cc.Component {
     onPageTurn() {
         if (this._isWrapping) return;
         const idx = this.pageView.getCurrentPageIndex();
-        const pages = this.pageView.content.children;
+        // console.log("[Banner] onPageTurn, idx:", idx, "currentIndex:", this._currentIndex);
+        if (idx === this._currentIndex) return;
 
-        if (idx > this._currentIndex) {
-            if (idx >= pages.length - 1) {
-                this._isWrapping = true;
-                this._currentIndex = idx;
-                this._wrapForward();
-            } else {
-                this._currentIndex = idx;
-                this._logicalIndex = this._getLogicalIndex(this._currentIndex);
-                this.scheduleOnce(() => {
-                    this.scrollToIndex(this._currentIndex, 0.3);
-                    this.pageView.getComponent(PageViewIndicatoHandl)?.updateIndicator(this._logicalIndex);
-                }, 0);
-            }
-        } else if (idx < this._currentIndex) {
-            if (idx <= 0) {
-                this._isWrapping = true;
-                this._currentIndex = idx;
-                this._wrapBackward();
-            } else {
-                this._currentIndex = idx;
-                this._logicalIndex = this._getLogicalIndex(this._currentIndex);
-                this.scheduleOnce(() => {
-                    this.scrollToIndex(this._currentIndex, 0.3);
-                    this.pageView.getComponent(PageViewIndicatoHandl)?.updateIndicator(this._logicalIndex);
-                }, 0);
-            }
-        }
+        // Wrapping is decided exclusively by onTouchEnd (manual swipe past the boundary)
+        // and autoScrollNext (auto-scroll past the boundary) — both check whether we were
+        // ALREADY at the edge before moving. Merely arriving at the last/first page via a
+        // normal swipe is valid navigation and must NOT itself trigger a wrap.
+        this._currentIndex = idx;
+        this._logicalIndex = this._getLogicalIndex(this._currentIndex);
+        this.pageView.getComponent(PageViewIndicatoHandl)?.updateIndicator(this._logicalIndex);
     }
 
     onEnable() {
@@ -251,6 +234,10 @@ export default class bannerHandler extends cc.Component {
                 this.scrollToIndex(this._currentIndex, 0);
                 this.pageView.getComponent(PageViewIndicatoHandl)?.updateIndicator(this._logicalIndex);
             }, 0);
+        } else if (!this._isInitialized && this._pendingData) {
+            // First-attempt init was lost (e.g. node got disabled mid-retry during a slow
+            // cold-start layout pass). Retry now that the node is active again.
+            this.setData(this._pendingData);
         }
     }
 

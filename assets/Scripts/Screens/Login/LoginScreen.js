@@ -150,6 +150,7 @@ cc.Class({
                                     K.Token.refresh_token = cc.sys.localStorage.getItem("tx_auto_login_refresh_token");
                                     K.Token.access_token_expire_at = cc.sys.localStorage.getItem("tx_auto_login_access_token_expire_at");
                                     K.Token.refresh_token_expire_at = cc.sys.localStorage.getItem("tx_auto_login_refresh_token_expire_at");
+                                    GameManager.emit("loginSuccess");
 
                                     inst.pauseLogin = false;
 

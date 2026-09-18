@@ -222,6 +222,7 @@ var TXLogin = cc.Class({
                     K.Token.access_token_expire_at = data.access_token_expire_at;
                     K.Token.refresh_token_expire_at = data.refresh_token_expire_at;
                     K.Token.membershipToken = data.membershipToken;
+                    GameManager.emit("loginSuccess");
 
                     this.txErrorMessage.string = "";
                     this.txUserName.string = txUserName;

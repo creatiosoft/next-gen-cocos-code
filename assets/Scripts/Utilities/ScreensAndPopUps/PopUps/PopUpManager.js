@@ -101,7 +101,7 @@ var PopUpManager = cc.Class({
         },
     },
 
-    onLoad: function() {
+    onLoad: function () {
         window.PopupManager = this;
         // prefab: 资源路径
         // mutexHide: 打开本弹窗时 hide（节点保留，下次可直接再开）
@@ -329,8 +329,8 @@ var PopUpManager = cc.Class({
     /**
      * True popup: unique per type, parented under popupParent (above normal UI).
      */
-    show: function(popUp, data, callback) {
-        console.trace('[PopupManager/show]', this.getPopupName(popUp), data);
+    show: function (popUp, data, callback) {
+        // console.trace('[PopupManager/show]', this.getPopupName(popUp), data);
         return this._showInternal(popUp, data, callback, this._getDefaultParent());
     },
 
@@ -339,12 +339,12 @@ var PopUpManager = cc.Class({
      * hold their own HandHistory / BuyIn / BreakTime at the same time.
      * Empty parent falls back to the global popupParent (same as show).
      */
-    showIn: function(popUp, data, callback, parent) {
+    showIn: function (popUp, data, callback, parent) {
         console.trace('[PopupManager/showIn]', this.getPopupName(popUp), data);
         return this._showInternal(popUp, data, callback, parent || this._getDefaultParent());
     },
 
-    _showInternal: function(popUp, data, callback, parent) {
+    _showInternal: function (popUp, data, callback, parent) {
         this._applyMutexPopups(popUp);
         var key = this._instanceKey(popUp, parent);
         if (this._isKeyOpen(key)) {
@@ -362,14 +362,14 @@ var PopUpManager = cc.Class({
         return this._loadAndShowPopup(popUp, data, callback, parent);
     },
 
-    _getDefaultParent: function() {
+    _getDefaultParent: function () {
         return this.popupParent || this.node;
     },
 
     /**
      * show() → "12". showIn(tableA) → "12#<uuid>". Prefab cache stays per type.
      */
-    _instanceKey: function(popUp, parent) {
+    _instanceKey: function (popUp, parent) {
         var host = parent || this._getDefaultParent();
         var def = this._getDefaultParent();
         if (!host || host === def) {
@@ -382,13 +382,13 @@ var PopUpManager = cc.Class({
         return String(popUp) + '#' + id;
     },
 
-    _typeFromKey: function(key) {
+    _typeFromKey: function (key) {
         var s = String(key);
         var hash = s.indexOf('#');
         return Number(hash === -1 ? s : s.substring(0, hash));
     },
 
-    _keysForType: function(popUp) {
+    _keysForType: function (popUp) {
         var prefix = String(popUp);
         var out = [];
         for (var i = 0; i < this.currentOverLayedPopUps.length; i++) {
@@ -400,16 +400,16 @@ var PopUpManager = cc.Class({
         return out;
     },
 
-    _isKeyOpen: function(key) {
+    _isKeyOpen: function (key) {
         return this.currentOverLayedPopUps.indexOf(key) !== -1;
     },
 
-    _getCachedNodeByKey: function(key) {
+    _getCachedNodeByKey: function (key) {
         const node = this.loadedPopups[key];
         return (node && cc.isValid(node)) ? node : null;
     },
 
-    _getCachedNode: function(popUp, parent) {
+    _getCachedNode: function (popUp, parent) {
         if (parent) {
             return this._getCachedNodeByKey(this._instanceKey(popUp, parent));
         }
@@ -422,17 +422,17 @@ var PopUpManager = cc.Class({
         return null;
     },
 
-    _getPopupConfig: function(popUp) {
+    _getPopupConfig: function (popUp) {
         return this.popupPrefabPaths[popUp] || null;
     },
 
-    _getPrefabPath: function(popUp) {
+    _getPrefabPath: function (popUp) {
         const cfg = this._getPopupConfig(popUp);
         if (!cfg) return null;
         return typeof cfg === 'string' ? cfg : cfg.prefab;
     },
 
-    _isPersistPopup: function(popUp) {
+    _isPersistPopup: function (popUp) {
         const cfg = this._getPopupConfig(popUp);
         return !!(cfg && typeof cfg === 'object' && cfg.persist);
     },
@@ -440,14 +440,14 @@ var PopUpManager = cc.Class({
     /**
      * 打开 popUp 前处理互斥项。单向，不会反关自己。
      */
-    _applyMutexPopups: function(popUp) {
+    _applyMutexPopups: function (popUp) {
         const cfg = this._getPopupConfig(popUp);
         if (!cfg) return;
         this._forEachMutex(cfg.mutexHide, popUp, this.hide);
         this._forEachMutex(cfg.mutexRemove, popUp, this.remove);
     },
 
-    _forEachMutex: function(list, selfType, action) {
+    _forEachMutex: function (list, selfType, action) {
         if (!list || !list.length) return;
         for (var i = 0; i < list.length; i++) {
             if (list[i] === selfType) continue;
@@ -458,11 +458,11 @@ var PopUpManager = cc.Class({
     /**
      * 枚举值即 zIndex。可在这里单独覆盖某个类型，不必改枚举。
      */
-    getPopupZIndex: function(popUp) {
+    getPopupZIndex: function (popUp) {
         return popUp;
     },
 
-    _applyParentAndZIndexByKey: function(key, parent) {
+    _applyParentAndZIndexByKey: function (key, parent) {
         const popupNode = this._getCachedNodeByKey(key);
         if (!popupNode) return;
 
@@ -477,7 +477,7 @@ var PopUpManager = cc.Class({
         }
     },
 
-    _loadAndShowPopup: function(popUp, data, callback, parent) {
+    _loadAndShowPopup: function (popUp, data, callback, parent) {
         const path = this._getPrefabPath(popUp);
         const key = this._instanceKey(popUp, parent);
         if (!path) {
@@ -502,7 +502,7 @@ var PopUpManager = cc.Class({
         });
     },
 
-    _instantiateAndShow: function(popUp, prefab, data, callback, parent) {
+    _instantiateAndShow: function (popUp, prefab, data, callback, parent) {
         const popupNode = cc.instantiate(prefab);
         const targetParent = parent || this._getDefaultParent();
         const key = this._instanceKey(popUp, targetParent);
@@ -523,7 +523,7 @@ var PopUpManager = cc.Class({
     /**
      * @param {Boolean} needOnShow true on first instantiate; hide then show only restores visibility.
      */
-    _activateByKey: function(key, popUp, data, callback, parent, needOnShow) {
+    _activateByKey: function (key, popUp, data, callback, parent, needOnShow) {
         const popupNode = this._getCachedNodeByKey(key);
         if (!popupNode) return;
 
@@ -553,7 +553,7 @@ var PopUpManager = cc.Class({
      *   Pass the same parent used in showIn to close that table's copy.
      *   From a popup script, prefer closeSelf().
      */
-    hide: function(popUp, callback, parent) {
+    hide: function (popUp, callback, parent) {
         try {
             console.trace('[PopupManager/hide]', this.getPopupName(popUp));
             var keys = parent ? [this._instanceKey(popUp, parent)] : this._keysForTypeOnDefaultOrSingle(popUp);
@@ -569,7 +569,7 @@ var PopUpManager = cc.Class({
     /**
      * @param parent optional. Same rules as hide().
      */
-    remove: function(popUp, callback, parent) {
+    remove: function (popUp, callback, parent) {
         console.trace('[PopupManager/remove]', this.getPopupName(popUp));
         var keys = parent ? [this._instanceKey(popUp, parent)] : this._keysForTypeOnDefaultOrSingle(popUp);
         var last = keys.length - 1;
@@ -582,7 +582,7 @@ var PopUpManager = cc.Class({
      * Without parent: the global instance (key === type). If that is missing
      * and only one table-scoped copy exists, close that copy (legacy callers).
      */
-    _keysForTypeOnDefaultOrSingle: function(popUp) {
+    _keysForTypeOnDefaultOrSingle: function (popUp) {
         var defKey = String(popUp);
         if (this._isKeyOpen(defKey) || this._getCachedNodeByKey(defKey)) {
             return [defKey];
@@ -594,7 +594,7 @@ var PopUpManager = cc.Class({
         return keys.length ? [] : [defKey];
     },
 
-    _hideByKey: function(key, callback) {
+    _hideByKey: function (key, callback) {
         if (!this._isKeyOpen(key)) {
             callback && callback();
             return;
@@ -619,7 +619,7 @@ var PopUpManager = cc.Class({
         GameManager.emit("showJoinSimlar");
     },
 
-    _removeByKey: function(key, callback) {
+    _removeByKey: function (key, callback) {
         this._removeKeyFromOverlay(key);
 
         const popupNode = this._getCachedNodeByKey(key);
@@ -638,21 +638,21 @@ var PopUpManager = cc.Class({
         GameManager.emit("showJoinSimlar");
     },
 
-    _isPopupCurrentlyOpen: function(popUp, parent) {
+    _isPopupCurrentlyOpen: function (popUp, parent) {
         if (parent) {
             return this._isKeyOpen(this._instanceKey(popUp, parent));
         }
         return this._keysForType(popUp).length > 0;
     },
 
-    _removeKeyFromOverlay: function(key) {
+    _removeKeyFromOverlay: function (key) {
         const index = this.currentOverLayedPopUps.indexOf(key);
         if (index !== -1) {
             this.currentOverLayedPopUps.splice(index, 1);
         }
     },
 
-    _removePopupFromOverlay: function(popUp) {
+    _removePopupFromOverlay: function (popUp) {
         var keys = this._keysForType(popUp);
         for (var i = 0; i < keys.length; i++) {
             this._removeKeyFromOverlay(keys[i]);
@@ -663,7 +663,7 @@ var PopUpManager = cc.Class({
      * 栈顶按枚举值（zIndex）取最大的，而不是「最后 push 的」。
      * 这样 currentPopUp 始终指向当前视觉上最上面的那个。
      */
-    _getTopOverlaidPopup: function() {
+    _getTopOverlaidPopup: function () {
         if (!this.currentOverLayedPopUps.length) {
             return PopUpType.None;
         }
@@ -682,7 +682,7 @@ var PopUpManager = cc.Class({
     /**
      * @description Hide all Popups
      */
-    hideAllPopUps: function() {
+    hideAllPopUps: function () {
         const list = this.currentOverLayedPopUps.slice();
         for (var i = 0; i < list.length; i++) {
             if (this._isPersistPopup(this._typeFromKey(list[i]))) continue;
@@ -690,7 +690,7 @@ var PopUpManager = cc.Class({
         }
     },
 
-    removeAllPopUps: function() {
+    removeAllPopUps: function () {
         const list = this.currentOverLayedPopUps.slice();
         for (var i = 0; i < list.length; i++) {
             if (this._isPersistPopup(this._typeFromKey(list[i]))) continue;
@@ -701,7 +701,7 @@ var PopUpManager = cc.Class({
     /**
      * Destroy every showIn instance parented under `parent` (leave table).
      */
-    removePopupsIn: function(parent) {
+    removePopupsIn: function (parent) {
         if (!parent) return;
         var suffix = '#' + (parent.uuid || parent._id);
         const list = this.currentOverLayedPopUps.slice();
@@ -718,15 +718,15 @@ var PopUpManager = cc.Class({
         }
     },
 
-    checkIfPopupActive: function() {
+    checkIfPopupActive: function () {
         return this.currentOverLayedPopUps.length > 0;
     },
 
-    checkIfPopupTypeActive: function(popup, parent) {
+    checkIfPopupTypeActive: function (popup, parent) {
         return this._isPopupCurrentlyOpen(popup, parent);
     },
 
-    getPopupNode: function(popUp, parent) {
+    getPopupNode: function (popUp, parent) {
         return this._getCachedNode(popUp, parent);
     },
 
@@ -734,10 +734,10 @@ var PopUpManager = cc.Class({
      * 只预加载 prefab 资源，不 instantiate、不挂 parent。
      * 之后第一次 show / showIn 会直接用缓存实例化，避免 IO 卡顿。
      */
-    preloadPopups: function(popupList) {
+    preloadPopups: function (popupList) {
         if (!popupList || !popupList.length) return;
         const self = this;
-        popupList.forEach(function(popUp) {
+        popupList.forEach(function (popUp) {
             if (self.loadedPrefabs[popUp]) return;
 
             const path = self._getPrefabPath(popUp);
@@ -745,7 +745,7 @@ var PopUpManager = cc.Class({
                 console.warn("No path defined for PopUpType:", popUp);
                 return;
             }
-            cc.resources.load(path, cc.Prefab, function(err, prefab) {
+            cc.resources.load(path, cc.Prefab, function (err, prefab) {
                 if (err || !prefab) {
                     console.error("Failed to preload:", path, err);
                     return;
@@ -755,7 +755,7 @@ var PopUpManager = cc.Class({
         });
     },
 
-    isPopupActive: function(popUp, parent) {
+    isPopupActive: function (popUp, parent) {
         if (parent) {
             var key = this._instanceKey(popUp, parent);
             if (!this._isKeyOpen(key)) return false;
@@ -770,7 +770,7 @@ var PopUpManager = cc.Class({
         return false;
     },
 
-    isAnyOfPopupsActive: function() {
+    isAnyOfPopupsActive: function () {
         let popupList = [
             // common
             PopUpType.MaxTablesJoinedPopup,
@@ -835,7 +835,7 @@ var PopUpManager = cc.Class({
         return false;
     },
 
-    getPopupName: function(popUp) {
+    getPopupName: function (popUp) {
         if (popUp == null) return '';
         var name = PopUpType[popUp];
         if (typeof name === 'string') return name;
