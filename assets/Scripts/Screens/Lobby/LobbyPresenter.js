@@ -345,8 +345,8 @@ cc.Class({
     },
 
     _setVariationTabButtons: function (room) {
-        var activeStates = [room.isShowAll, room.isShowHoldem, room.isShowPLO, room.isShowMixed];
-        for (var i = 0; i < this.tabButtons2.length && i < 4; i++) {
+        var activeStates = [room.isShowAll, room.isShowHoldem, room.isShowPLO, room.isShowMixed, room.isShowBombpot];
+        for (var i = 0; i < this.tabButtons2.length && i < activeStates.length; i++) {
             if (activeStates[i]) {
                 this.setActiveButton(this.tabButtons2[i]);
             } else {
@@ -374,6 +374,7 @@ cc.Class({
                 room.isShowHoldem = false;
                 room.isShowPLO = false;
                 room.isShowMixed = false;
+                room.isShowBombpot = false;
             } else {
                 if (mode === 'holdem') {
                     room.isShowHoldem = !room.isShowHoldem;
@@ -381,8 +382,10 @@ cc.Class({
                     room.isShowPLO = !room.isShowPLO;
                 } else if (mode === 'mixed') {
                     room.isShowMixed = !room.isShowMixed;
+                } else if (mode === 'bombpot') {
+                    room.isShowBombpot = !room.isShowBombpot;
                 }
-                room.isShowAll = !room.isShowHoldem && !room.isShowPLO && !room.isShowMixed;
+                room.isShowAll = !room.isShowHoldem && !room.isShowPLO && !room.isShowMixed && !room.isShowBombpot;
             }
             room.isShowMega = false;
             room.isShowAllIn = false;
@@ -476,6 +479,30 @@ cc.Class({
 
     onShowMixed: function (fromMainMenu = false, cb = null) {
         this._applyRoomVariation('mixed', fromMainMenu, cb);
+    },
+
+    /**
+     * @method onShowBombpot
+     * @description Show Bombpot button handler
+     * @memberof Screens.Lobby.LobbyPresenter#
+     */
+    onShowBombpot: function (fromMainMenu = false, cb = null) {
+        this._applyRoomVariation('bombpot', fromMainMenu, cb);
+    },
+
+    setBombpotGamesView: function (fromMainMenu = false, cb = null) {
+        this.onShowAll();
+        this._applyRoomVariation('bombpot', fromMainMenu, cb);
+        this.tabButtons2[this.tabButtons2.length-1].node.active = false;
+        this.roomTable.getComponent('CashRoom').clearAllFilter();
+        this.roomTable.getComponent('CashRoom').getFilterCount();
+    },
+
+    setCashGamesView: function () {
+        this.tabButtons2[this.tabButtons2.length - 1].node.active = true;
+        this.onShowAll();
+        this.roomTable.getComponent('CashRoom').clearAllFilter();
+        this.roomTable.getComponent('CashRoom').getFilterCount();
     },
 
     onShowLobbySettings: function () {

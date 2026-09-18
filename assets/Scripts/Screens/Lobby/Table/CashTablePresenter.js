@@ -232,12 +232,12 @@ var CashTablePresenter = cc.Class({
                 this.roomTag.string = "NLH";
                 this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[0];
             } else if (room.channelVariation == 'Omaha') {
-                this.roomTag.string = "PLO";
+                this.roomTag.string = "PLO4";
                 this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];
-            } else if (room.channelVariation == 'Omaha 5') {
+            } else if (room.channelVariation == 'Omaha 5' || room.channelVariation == 'Bomb Pot 5') {
                 this.roomTag.string = "PLO5";
                 this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];
-            } else if (room.channelVariation == 'Omaha 6') {
+            } else if (room.channelVariation == 'Omaha 6' || room.channelVariation == 'Bomb Pot 6') {
                 this.roomTag.string = "PLO6";
                 this.roomTagIcon.spriteFrame = this.roomTagIconsSpriteFrame[1];
             } else if (room.channelVariation == 'Mega Hold’em') {

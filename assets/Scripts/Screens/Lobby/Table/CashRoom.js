@@ -93,6 +93,7 @@ var CashRoom = cc.Class({
         isShowMega: false,
         isShowAllIn: false,
         isShowFast: false,
+        isShowBombpot: false,
         isShowAll: true,
         lockClick: false,
 
@@ -192,7 +193,7 @@ var CashRoom = cc.Class({
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
                     ploTag.active = true;
                     ploTag.children[0].getComponent(cc.Label).string = 4;
-                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO";
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO4";
                 }
             });
         } else if (data.channelVariation == 'Omaha 5') {
@@ -235,8 +236,26 @@ var CashRoom = cc.Class({
                     cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "Big O";
                 }
             });
+        } else if (data.channelVariation == 'Bomb Pot 5') {
+            cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function (err, tex) {//assets/TAGS/plo8
+                if (!err) {
+                    cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = false;
+                    ploTag.children[0].getComponent(cc.Label).string = 8;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO5";
+                }
+            });
+        } else if (data.channelVariation == 'Bomb Pot 6') {
+            cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function (err, tex) {//assets/TAGS/plo8
+                if (!err) {
+                    cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = false;
+                    ploTag.children[0].getComponent(cc.Label).string = 8;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO6";
+                }
+            });
         } else {
-            cc.loader.loadRes('assets/TAGS/holdem', cc.SpriteFrame, function(err, tex) {
+            cc.loader.loadRes('assets/TAGS/holdem', cc.SpriteFrame, function (err, tex) {
                 if (!err) {
                     cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
                 }
@@ -401,6 +420,17 @@ var CashRoom = cc.Class({
         if (!room || !room.gameInfo) {
             return false;
         }
+
+        var isBombPot = room.hasBombPot == true || room.hasBombPot == "true";
+        if (this.isShowBombpot && !isBombPot) {
+            return false;
+        }
+
+        var hasVariationFilter = this.isShowHoldem || this.isShowPLO || this.isShowMixed || this.isShowMega || this.isShowFast || this.isShowAllIn;
+        if (!hasVariationFilter) {
+            return this.isShowBombpot && isBombPot;
+        }
+
         var vari = room.gameInfo.GameVariation;
         if (this.isShowHoldem && vari == "Texas Hold’em" && !room.isAllInAndFold) {
             return true;
@@ -629,7 +659,7 @@ var CashRoom = cc.Class({
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
                         ploTag.active = true;
                         ploTag.children[0].getComponent(cc.Label).string = 4;
-                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO";
+                        cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO4";
                     }
                 });
             } else if (data[i].gameInfo.GameVariation == 'Omaha 5') {
@@ -672,7 +702,28 @@ var CashRoom = cc.Class({
                         cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "BIG O";
                     }
                 });
-            } else {
+            } else if (data[i].gameInfo.GameVariation == 'Bomb Pot 5') {
+            cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {//assets/TAGS/plo8
+                if (!err) {
+                    cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = false;
+                    ploTag.children[0].getComponent(cc.Label).string = 8;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO5";
+                }
+            });
+        }
+        else if (data[i].gameInfo.GameVariation == 'Bomb Pot 6') {
+            cc.loader.loadRes('assets/TAGS/plo', cc.SpriteFrame, function(err, tex) {//assets/TAGS/plo8
+                if (!err) {
+                    cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
+                    ploTag.active = false;
+                    ploTag.children[0].getComponent(cc.Label).string = 8;
+                    cc.find('l/vari/roomType', instance).getComponent(cc.Label).string = "PLO6";
+                }
+            });
+        }
+            
+            else {
                 cc.loader.loadRes('assets/TAGS/holdem', cc.SpriteFrame, function (err, tex) {
                     if (!err) {
                         cc.find('l/vari', instance).getComponent(cc.Sprite).spriteFrame = tex;
@@ -791,23 +842,32 @@ var CashRoom = cc.Class({
             if (this.isShowAll) {
                 hit = true;
             } else {
-                if (this.isShowHoldem && child.__data.gameInfo.GameVariation == "Texas Hold’em" && !child.__data.isAllInAndFold) {
-                    hit = true;
-                }
-                if (this.isShowPLO && (child.__data.gameInfo.GameVariation == "Omaha" || child.__data.gameInfo.GameVariation == "Omaha 5" || child.__data.gameInfo.GameVariation == "Omaha 6")) {
-                    hit = true;
-                }
-                if (this.isShowMixed && child.__data.gameInfo.GameVariation == "Mixed Game") {
-                    hit = true;
-                }
-                if (this.isShowMega && child.__data.gameInfo.GameVariation == "Mega Hold’em") {
-                    hit = true;
-                }
-                if (this.isShowFast && child.__data.turnTime == 10) {
-                    hit = true;
-                }
-                if (this.isShowAllIn && child.__data.isAllInAndFold) {
-                    hit = true;
+                var childIsBombPot = child.__data.hasBombPot == true || child.__data.hasBombPot == "true";
+                var childHasVariationFilter = this.isShowHoldem || this.isShowPLO || this.isShowMixed || this.isShowMega || this.isShowFast || this.isShowAllIn;
+
+                if (!(this.isShowBombpot && !childIsBombPot)) {
+                    if (!childHasVariationFilter) {
+                        hit = this.isShowBombpot && childIsBombPot;
+                    } else {
+                        if (this.isShowHoldem && child.__data.gameInfo.GameVariation == "Texas Hold’em" && !child.__data.isAllInAndFold) {
+                            hit = true;
+                        }
+                        if (this.isShowPLO && (child.__data.gameInfo.GameVariation == "Omaha" || child.__data.gameInfo.GameVariation == "Omaha 5" || child.__data.gameInfo.GameVariation == "Omaha 6")) {
+                            hit = true;
+                        }
+                        if (this.isShowMixed && child.__data.gameInfo.GameVariation == "Mixed Game") {
+                            hit = true;
+                        }
+                        if (this.isShowMega && child.__data.gameInfo.GameVariation == "Mega Hold’em") {
+                            hit = true;
+                        }
+                        if (this.isShowFast && child.__data.turnTime == 10) {
+                            hit = true;
+                        }
+                        if (this.isShowAllIn && child.__data.isAllInAndFold) {
+                            hit = true;
+                        }
+                    }
                 }
 
                 if (!hit) {
@@ -1213,13 +1273,16 @@ var CashRoom = cc.Class({
     getFilterCount(){
         let count= 0;
         for (let a = 0; a < this.allFilterNode.length; a++) {
-            if (this.allFilterNode[a].getChildByName("pressed").active) {
-                count++;
+            if (this.allFilterNode[a].active) {
+                if (this.allFilterNode[a].getChildByName("pressed").active) {
+                    count++;
+                }
             }
+            
         }
         this.filterCountLabel.node.parent.active = count > 0;
         this.filterCountLabel.string = count + "";
-        this.defaultAllFilterNode.active = count <= 0;
+        // this.defaultAllFilterNode.active = count <= 0;
     },
 
     showSortByPopup(){       
@@ -1258,4 +1321,12 @@ var CashRoom = cc.Class({
         var toggles = this.sortToggleContainer.node.children;
         toggles[0].getComponent(cc.Toggle).isChecked = true;
     },
+
+    clearAllFilter(){
+        this.lowFilter.node.getChildByName("pressed").active = false;
+        this.midFilter.node.getChildByName("pressed").active = false;
+        this.highFilter.node.getChildByName("pressed").active = false;
+        this._syncBuyinFromButtons();
+        this._refreshFromCache();
+    }
 });
