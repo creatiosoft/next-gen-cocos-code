@@ -80,6 +80,10 @@ var TableContent = cc.Class({
             default: [],
             type: cc.SpriteFrame,
         },
+        bombPotIcon: {
+            default: null,
+            type: cc.Node
+        },
     },
 
     statics: {
@@ -189,6 +193,7 @@ var TableContent = cc.Class({
             }
             this.gameType.string = gameTypeStr;
         }
+        this.bombPotIcon.active = data.hasBombPot;
     },
 
     setContentText: function(data, textColor = true) {
